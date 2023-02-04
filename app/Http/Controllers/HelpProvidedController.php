@@ -39,24 +39,30 @@ class HelpProvidedController extends Controller
      */
     public function store(StoreHelpProvidedRequest $request)
     {
-        $welfare = new WelfareService();
+        $helpProvided = new HelpProvided();
 
         if(isset($request->images)){
             foreach ($request->images as $key => $image){
                 $name = $image->getClientOriginalName();
                 $fileName = 'help-' . substr(md5(sha1(time())), 0, 10) . '-' . $name;
                 $image->move(public_path('uploads'), $fileName);
-                $welfare->{'attached_file' . ($key + 1)} = $fileName;
+                $helpProvided->{'attached_file' . ($key + 1)} = $fileName;
             }
         }
 
-        $welfare->approved_by = $request->authorized_by;
-        $welfare->approved_date = $request->authorized_date;
-        $welfare->remarks = $request->summary;
-        $welfare->service_cost = $request->service_cost;
-        $welfare->last_edited_date = Carbon::today()->format('Y-m-d');
+        $helpProvided->member_id = $request->member_id;
+        $helpProvided->welfare_id = $request->welfare_id;
+        $helpProvided->help_cat_id = $request->help_cat_id;
+        $helpProvided->help_type_id = $request->hel_type_id;
+        $helpProvided->approved_by = $request->authorized_by;
+        $helpProvided->approved_date = $request->authorized_date;
+        $helpProvided->remarks = $request->summary;
+        $helpProvided->service_cost = $request->service_cost;
+        $helpProvided->date_payout = $request->date_payout;
 
-        $welfare->save();
+        $helpProvided->last_edited_date = Carbon::today()->format('Y-m-d');
+
+        $helpProvided->save();
 
         $member = AllMember::where('id', $request->member_id)->first();
         $member->current_job = $request->current_job;

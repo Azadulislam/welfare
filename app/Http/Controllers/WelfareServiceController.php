@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePaymentRequirest;
+use App\Http\Resources\TypesResoure;
 use App\Models\AllMember;
 use App\Models\CitizenshipCountry;
 use App\Models\Genders;
+use App\Models\HelpCategoriesType;
 use App\Models\HelpCategory;
+use App\Models\HelpTypes;
 use App\Models\Homestatuses;
 use App\Models\JobSectors;
 use App\Models\MemberStatuses;
@@ -159,6 +162,12 @@ class WelfareServiceController extends Controller
     public function destroy(WelfareService $welfareService)
     {
         //
+    }
+
+    public function typeByCategory($category = null){
+        $types = HelpCategoriesType::where('help_category_id', '=', $category)->get();
+
+        return TypesResoure::collection($types);
     }
 
 }

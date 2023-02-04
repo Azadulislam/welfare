@@ -53,7 +53,7 @@
                                         array('label'=>'Date', 'name'=>'date', 'type' => 'date', 'required' => true),
                                         array('label'=>'Help Category', 'name'=>'help_cat_id', 'type' => 'select', 'required'=> true, 'values' => $help_cats, 'default' => 'Select Country'),
                                         array('label'=>'Total RM', 'name'=>'service_cost', 'type' => 'text', 'required' => true),
-                                        array('label'=>'Type Of Help', 'name'=>'type_of_help', 'type' => 'select', 'required' => false, 'default' => 'Select Gender', 'values' => $citizenshipCounties)
+                                        array('label'=>'Type Of Help', 'name'=>'hel_type_id', 'type' => 'select', 'required' => false, 'default' => 'Select Category First', 'values' => [])
                                         ) as $data)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row @if($data['required']) required @endif">
@@ -84,9 +84,11 @@
                                     </div>
                                 @endforeach
                             </div>
-                            <div class="form-group">
-                                <label for="exampleTextarea1">Summary</label>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-md-2 col-form-label" for="exampleTextarea1">Summary</label>
+                                <div class="col-sm-9 col-md-10">
                                 <textarea class="form-control" name="summary" id="exampleTextarea1" rows="4">{{ old('summary') }}</textarea>
+                                </div>
                                 @error('summary')
                                 <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -97,7 +99,7 @@
                                 @foreach(array(
                                         array('label'=>'Authorized By', 'name'=>'authorized_by', 'type' => 'text', 'required' => true),
                                         array('label'=>'Authorized Date', 'name'=>'authorized_date', 'type' => 'date', 'required'=> true),
-                                        array('label'=>'Name Of Help Recipient', 'name'=>'recipient_name', 'type' => 'text', 'required' => true),
+                                        array('label'=>'Name Of Help Recipient', 'name'=>'payout_received_by', 'type' => 'text', 'required' => true),
                                         array('label'=>'Date Received', 'name'=>'date_payout', 'type' => 'date', 'required' => false)
                                         ) as $data)
                                     <div class="col-md-6 col-12">
@@ -156,5 +158,30 @@
     <script src="{{ asset('assets/dropify/dist/js/dropify.js') }}"></script>
     <script>
         $('.dropify').dropify();
+
+        $('[name="help_cat_id"]').change((e)=>{
+            let category = $(e.currentTarget).val();
+            $.ajax({
+                'url': '/type/'+category,
+                'method': 'get',
+                'content-type': 'json',
+                'processDwata': false,
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+                },
+                success:(response)=> {
+                    let typeEl = $('[name="hel_type_id"]');
+                    typeEl.html('<option>Select Type</select>');
+                    $(response.data).each((index, data)=>{
+                        typeEl.append('<option value="'+data.id+'">'+data.name+'</select>')
+                    })
+                    if(response.data.length < 1){
+                        typeEl.html('<option>Select Category First</select>');
+                    }
+
+                }
+            })
+        })
+
     </script>
 @endsection
