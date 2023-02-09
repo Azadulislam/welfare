@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\AllMember;
+use App\Models\HelpCategoriesType;
+use App\Models\HelpCategory;
 use App\Models\HelpProvided;
 use App\Http\Requests\StoreHelpProvidedRequest;
 use App\Http\Requests\UpdateHelpProvidedRequest;
+use App\Models\HelpTypes;
 use App\Models\WelfareService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\File;
 
 class HelpProvidedController extends Controller
 {
@@ -44,7 +48,7 @@ class HelpProvidedController extends Controller
         if(isset($request->images)){
             foreach ($request->images as $key => $image){
                 $name = $image->getClientOriginalName();
-                $fileName = 'help-' . substr(md5(sha1(time())), 0, 10) . '-' . $name;
+                $fileName = 'help-payout-' . substr(md5(sha1(time())), 0, 10) . '-' . $name;
                 $image->move(public_path('uploads'), $fileName);
                 $helpProvided->{'attached_file' . ($key + 1)} = $fileName;
             }
@@ -53,26 +57,22 @@ class HelpProvidedController extends Controller
         $helpProvided->member_id = $request->member_id;
         $helpProvided->welfare_id = $request->welfare_id;
         $helpProvided->help_cat_id = $request->help_cat_id;
-        $helpProvided->help_type_id = $request->hel_type_id;
+        $helpProvided->help_type_id = $request->help_type_id;
         $helpProvided->approved_by = $request->authorized_by;
         $helpProvided->approved_date = $request->authorized_date;
         $helpProvided->remarks = $request->summary;
         $helpProvided->service_cost = $request->service_cost;
         $helpProvided->date_payout = $request->date_payout;
+        $helpProvided->payout_received_by = $request->payout_received_by;
 
         $helpProvided->last_edited_date = Carbon::today()->format('Y-m-d');
 
         $helpProvided->save();
 
-        $member = AllMember::where('id', $request->member_id)->first();
-        $member->current_job = $request->current_job;
-        $member->unemployed_reason = $request->unemployed_reason;
-        $member->current_job_sector_id  = $request->job_sector_id;
-        $member->home_status_id  = $request->home_status_id;
+        $details = 'New welfare help payment added';
+        addActivity($helpProvided->id, $details);
 
-        $member->update();
-
-        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help registered successfully');
+        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help payout successfully');
     }
 
     /**
@@ -94,7 +94,8 @@ class HelpProvidedController extends Controller
      */
     public function edit(HelpProvided $helpProvided)
     {
-        //
+        $help_cats = HelpCategory::all();
+        return view('edit-payment', compact('helpProvided', 'help_cats' ));
     }
 
     /**
@@ -106,7 +107,43 @@ class HelpProvidedController extends Controller
      */
     public function update(UpdateHelpProvidedRequest $request, HelpProvided $helpProvided)
     {
-        //
+        if(isset($request->images)){
+            foreach ($request->images as $key => $image){
+                $oldFile = $request->oldImages[$key];
+                $name = $image->getClientOriginalName();
+                if(!empty($name)){
+                    $fileName = 'help-payout-' . substr(md5(sha1(time())), 0, 10) . '-' . $name;
+                    $image->move(public_path('uploads'), $fileName);
+                    $helpProvided->{'attached_file' . ($key + 1)} = $fileName;
+                    if (File::exists(public_path('uploads/' . $oldFile))) {
+                        if ($oldFile != 'profile.png') {
+                            File::delete(public_path('uploads/' . $oldFile));
+                        }
+                    }
+                }else{
+                    $helpProvided->{'attache_file' . ($key+1)} = $oldFile;
+                }
+            }
+        }
+
+
+        $helpProvided->help_cat_id = $request->help_cat_id;
+        $helpProvided->help_type_id = $request->help_type_id;
+        $helpProvided->approved_by = $request->approved_by;
+        $helpProvided->approved_date = $request->approved_date;
+        $helpProvided->remarks = $request->summary;
+        $helpProvided->service_cost = $request->service_cost;
+        $helpProvided->date_payout = $request->date_payout;
+        $helpProvided->payout_received_by = $request->payout_received_by;
+
+        $helpProvided->last_edited_date = Carbon::today()->format('Y-m-d');
+
+        $helpProvided->update();
+
+        $details = 'One welfare help payment updated';
+        addActivity($helpProvided->id, $details);
+
+        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help payout updated successfully');
     }
 
     /**

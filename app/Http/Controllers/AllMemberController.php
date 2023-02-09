@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MemberDataResource;
+
 use App\Models\AllMember;
 use App\Http\Requests\StoreAllMemberRequest;
 use App\Http\Requests\UpdateAllMemberRequest;
@@ -14,14 +14,11 @@ use App\Models\MaritalStatuses;
 use App\Models\MemberStatuses;
 use App\Models\Races;
 use App\Models\Relations;
-use App\Models\RelationShip;
 use App\Models\Religions;
 use App\Models\State;
 use Carbon\Carbon;
-use Dflydev\DotAccessData\Data;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use function PHPUnit\Framework\isNull;
 
 class AllMemberController extends Controller
 {
@@ -64,13 +61,13 @@ class AllMemberController extends Controller
             'birth_date' => $member->birth_date,
             'telephone' => $member->telephone_one,
             'name2' => $member->name2,
-            'gender' => $member->gender,
+            'gender' => $member->gender->name,
             'member_status_ids' => $member->member_status_ids,
-            'race' => $member->race,
-            'religion' => $member->religion,
+            'race' => getName($member->race),
+            'religion' => getName($member->religion),
             'marital_status' => is_null($member->marital_status) ? '': $member->marital_status->name,
             'marital_status_id' => $member->marital_status_id,
-            'citizenship' => is_null($member->citizenship)?'':$member->citizenship->name,
+            'citizenship' => getName($member->citizenship),
             'mobile_phone' => $member->mobile_phone,
         ];
         return response($response);
@@ -100,7 +97,6 @@ class AllMemberController extends Controller
         $members = AllMember::where('id', '<>', $member->id)->get();
         $relations = Relations::all();// RelationShip::where('member_id', '=', $member->id)->orWhere('related_to_id', '=', $member->id)->get();
         $relationships = $member->relation_ships;
-
         return view('family', compact('member', 'relationships', 'memberStatus', 'maritalStatus', 'members', 'relations'));
     }
 
@@ -148,6 +144,7 @@ class AllMemberController extends Controller
         $allMember->citizenship_id = $request->citizenship;
         $allMember->gender_id = $request->gender;
         $allMember->race_id = $request->race_id;
+        $allMember->religion_id = $request->religion_id;
         $allMember->mobile_phone = $request->mobile_phone;
         $allMember->marital_status_id = $request->marital_status_id;
         $allMember->ic_address1 = $request->ic_address1;
@@ -157,6 +154,7 @@ class AllMemberController extends Controller
         $allMember->ic_postcode = $request->ic_postcode;
         $allMember->ic_district = $request->ic_district;
         $allMember->ic_state_id = $request->ic_state_id;
+        $allMember->ic_section = $request->ic_section;
 
         $allMember->home_address1 = $request->home_address1;
         $allMember->home_address2 = $request->home_address2;
@@ -165,12 +163,19 @@ class AllMemberController extends Controller
         $allMember->home_postcode = $request->home_postcode;
         $allMember->home_district = $request->home_district;
         $allMember->home_state_id = $request->home_state_id;
+        $allMember->home_section = $request->home_section;
 
         $allMember->telephone_one = $request->telephone_one;
         $allMember->mobile_phone = $request->mobile_phone;
+        $allMember->beneficiary_name = $request->beneficiary_name;
+        $allMember->beneficiary_ic = $request->beneficiary_ic;
+        $allMember->email = $request->email;
         $allMember->last_edited_date =Carbon::today()->format('Y-m-d');
 
         $allMember->save();
+
+        $details = 'New Member Added';
+        addActivity($allMember->id, $details);
 
         return redirect()->route('member.index')->with('alert-success', 'Member added successfully');
     }
@@ -215,7 +220,8 @@ class AllMemberController extends Controller
         $religions = Religions::all();
         $genders = Genders::all();
         $member = AllMember::where('id', '=', $allMember)->first();
-        return view('edit-member', compact('home_types', 'member', 'job_sectors', 'member_statuses', 'citizenshipCounties', 'religions', 'races', 'maritalStatuses', 'genders'));
+        $states = State::all();
+        return view('edit-member', compact('home_types', 'member', 'job_sectors', 'member_statuses', 'citizenshipCounties', 'religions', 'races', 'maritalStatuses', 'genders', 'states'));
     }
 
     /**
@@ -253,9 +259,10 @@ class AllMemberController extends Controller
         $allMember->member_status_ids = json_encode($request->member_status_ids);
         $allMember->birth_date = $request->birth_date;
 //        $allMember->age = $request->age;
-        $allMember->citizenship = $request->citizenship;
+        $allMember->citizenship_id = $request->citizenship;
         $allMember->gender = $request->gender;
         $allMember->race_id = $request->race_id;
+        $allMember->religion_id = $request->religion_id;
         $allMember->mobile_phone = $request->mobile_phone;
         $allMember->marital_status_id = $request->marital_status_id;
         $allMember->ic_address1 = $request->ic_address1;
@@ -265,6 +272,7 @@ class AllMemberController extends Controller
         $allMember->ic_postcode = $request->ic_postcode;
         $allMember->ic_district = $request->ic_district;
         $allMember->ic_state = $request->ic_state;
+        $allMember->ic_section = $request->ic_section;
 
         $allMember->home_address1 = $request->home_address1;
         $allMember->home_address2 = $request->home_address2;
@@ -272,13 +280,20 @@ class AllMemberController extends Controller
         $allMember->home_city = $request->home_city;
         $allMember->home_postcode = $request->home_postcode;
         $allMember->home_district = $request->home_district;
-        $allMember->home_state = $request->home_state;
+        $allMember->home_state_id = $request->home_state;
+        $allMember->home_section = $request->home_section;
 
         $allMember->telephone_one = $request->telephone_one;
         $allMember->mobile_phone = $request->mobile_phone;
+        $allMember->beneficiary_name = $request->beneficiary_name;
+        $allMember->beneficiary_ic = $request->beneficiary_ic;
+        $allMember->email = $request->email;
         $allMember->last_edited_date =Carbon::today()->format('Y-m-d');
 
         $allMember->update();
+
+        $details = 'Member info Updated';
+        addActivity($allMember->id, $details);
 
         return redirect()->route('member.index')->with('alert-success', 'Member updated successfully');
     }
@@ -293,6 +308,9 @@ class AllMemberController extends Controller
     {
         $member = AllMember::where('id', '=', $allMember)->first();
         $member->delete();
+
+        $details = 'One member Deleted';
+        addActivity($member->id, $details);
 
         return redirect()->route('member.index')->with('alert-warning', 'Member Deleted successfully');
     }

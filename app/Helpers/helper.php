@@ -1,6 +1,8 @@
 <?php
 
+use App\Models\ActivityLog;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 function address(){
     return 'okay';
@@ -37,5 +39,20 @@ function age($birth_date){
 
 
 function formatDate($date){
-    return Carbon::parse($date)->format('d M Y');
+    return Carbon::parse($date)->format('Y-m-d');
+}
+
+
+function addActivity($action_id, $details){
+    $activity = new ActivityLog();
+    $activity->user_id = Auth::user()->id;
+    $activity->action_id = $action_id;
+    $activity->action_details = $details;
+
+    $activity->save();
+}
+
+
+function getName($attr){
+    return $attr ? $attr->name : '';
 }

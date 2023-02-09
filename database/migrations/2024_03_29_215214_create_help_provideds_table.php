@@ -22,6 +22,7 @@ return new class extends Migration
             $table->timestamp('date_apply')->nullable();
             $table->timestamp('approved_date')->nullable();
             $table->string('approved_by', 55)->nullable();
+            $table->string('service_cost', 55)->nullable();
             $table->timestamp('date_payout')->nullable();
             $table->string('payout_received_by', 55)->nullable();
             $table->string('zakat_center', 55)->nullable();

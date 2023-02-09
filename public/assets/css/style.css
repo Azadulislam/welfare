@@ -13072,8 +13072,8 @@ input[type="button"].btn-block {
     word-wrap: break-word;
     background-color: #fff;
     background-clip: border-box;
-    border: 1px solid #e7eaed;
-    border-radius: 0;
+    border: 1px solid rgba(250, 182, 8, .35);
+    border-radius: 5px;
 }
 
 .card > hr {
@@ -21199,10 +21199,13 @@ select.form-control.border-dark:focus, .dataTables_wrapper select.border-dark:fo
     color: red;
 }
 
+.required:not(.form-group){
+    position: relative;
+}
 .required:not(.form-group):after{
     position: absolute;
     content: '*';
-    top: 0;
+    top: -5px;
     right: -10px;
     color: red;
 }
@@ -21677,13 +21680,13 @@ dl li {
 
 .dataTables_wrapper .dataTable thead th {
     border-bottom-width: 0;
-    border: 1px solid rgba(151, 151, 151, 0.18);
+    border: 1px solid rgba(250, 182, 8, .35);
     padding: 0.7rem 0.9375rem;
     white-space: nowrap;
 }
 
 .dataTables_wrapper .dataTable tbody tr td {
-    border: 1px solid rgba(151, 151, 151, 0.18);
+    border: 1px solid rgba(250, 182, 8, .35);
     color: #08113b;
     white-space: nowrap;
     font-weight: 400;
@@ -22514,7 +22517,7 @@ h2 {
     }
 
     .sidebar-icon-only .sidebar .nav .nav-item .nav-link {
-        display: block;
+        display: flex;
         padding-left: .5rem;
         padding-right: .5rem;
         text-align: center;
@@ -22679,4 +22682,17 @@ h2 {
     background: var(--primaryColor);
     color: white;
     position: relative;
+}
+
+.showOnPrint{
+    /*display: none;*/
+}
+
+@media print {
+    .hide-print{
+        display: none;
+    }
+    .showOnPrint{
+        display: block;
+    }
 }

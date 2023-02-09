@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php $member = $khairat_member->member @endphp
+    @php $member = $khairat->member @endphp
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 grid-margin stretch-card">
@@ -60,8 +60,8 @@
                                     array('label'=>'City', 'value'=> $member->home_city),
                                     array('label'=>'Postcode', 'value'=> $member->home_postcode),
                                     array('label'=>'District', 'value' => $member->home_district),
-                                    array('label'=>'State','value' => $member->home_state),
-                                    array('label'=>'Benificiary','value' => $member->home_state),
+                                    array('label'=>'State','value' => getName($member->home_state)),
+                                    array('label'=>'Beneficiary','value' => $member->beneficiary_name),
                                     array('label'=>'Birth Date','value' => $member->bitth_date),
                                     array('label'=>'IC','value' => $member->ic_no),
                                     array('label'=>'Job','value' => $member->job),
@@ -69,11 +69,11 @@
                                     array('label'=>'Asnaf Status','value' => $member->jobjob),
                                     ) as $data)
                                 <div class="col-md-6 col-12">
-                                    <div class="form-group">
-                                        <label class="form-label">
+                                    <div class="form-group row">
+                                        <label class="col-sm-3 form-label">
                                             <span>{{$data['label']}}</span>
                                         </label>
-                                        <div class="">
+                                        <div class="col-sm-9">
                                             {{$data['value']}}
                                         </div>
                                     </div>
@@ -91,7 +91,8 @@
                                  as $src)
                                 <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
                                     <label for="exampleInputCity1">Image file</label>
-                                    <img style="width: 100%;height: calc(100px + 5vw)" src="{{ asset("images/".$src['src'] ) }}" alt="">
+                                    <img style="width: 100%;height: calc(100px + 5vw)"
+                                         src="{{ asset("images/".$src['src'] ) }}" alt="">
                                 </div>
                             @endforeach
                         </div>

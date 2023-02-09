@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php $member = $death->member; @endphp
+    @php $member = $death->member @endphp
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 grid-margin stretch-card">
@@ -96,7 +96,8 @@
                                  as $src)
                                 <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
                                     <label for="exampleInputCity1">Image file</label>
-                                    <img style="width: 100%;height: calc(100px + 5vw)" src="{{ asset("uploads/".$src['src'] ) }}" alt="">
+                                    <img style="width: 100%;height: calc(100px + 5vw)"
+                                         src="{{ asset("uploads/".$src['src'] ) }}" alt="">
                                 </div>
                             @endforeach
                         </div>

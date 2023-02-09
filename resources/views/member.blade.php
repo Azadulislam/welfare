@@ -16,7 +16,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Full Name</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 py-2">
                                         {{ $member['name'] }}
                                     </div>
                                 </div>
@@ -24,7 +24,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Name</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 py-2">
                                         {{ $member['name'] }}
                                     </div>
                                 </div>
@@ -32,7 +32,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Telephone</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 py-2">
                                         {{ $member['telephone_one'] }}
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Telephone</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 py-2">
                                         {{ $member['telephone_one'] }}
                                     </div>
                                 </div>
@@ -48,7 +48,7 @@
                             <div class="col-12 col-md-6">
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Address</label>
-                                    <div class="col-sm-9">
+                                    <div class="col-sm-9 py-2">
                                         {{ $member['home_address1'] }}
                                     </div>
                                 </div>
@@ -59,20 +59,21 @@
                                     array('label'=>'City', 'value'=> $member->home_city),
                                     array('label'=>'Postcode', 'value'=> $member->home_postcode),
                                     array('label'=>'District', 'value' => $member->home_district),
-                                    array('label'=>'State','value' => $member->home_state),
-                                    array('label'=>'Benificiary','value' => $member->home_state),
+                                    array('label'=>'State','value' => getName($member->home_state)),
                                     array('label'=>'Birth Date','value' => $member->bitth_date),
                                     array('label'=>'IC','value' => $member->ic_no),
                                     array('label'=>'Job','value' => $member->job),
                                     array('label'=>'Guardian','value' => $member->jobjob),
                                     array('label'=>'Asnaf Status','value' => $member->jobjob),
+                                    array('label'=>'Beneficiary Name','value' => $member->beneficiary_name),
+                                    array('label'=>'Beneficiary IC','value' => $member->beneficiary_ic),
                                     ) as $data)
                                 <div class="col-md-6 col-12">
                                     <div class="form-group row">
                                         <label class="col-sm-3 col-form-label">
                                             <span>{{$data['label']}}</span>
                                         </label>
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-9 py-2">
                                             {{$data['value']}}
                                         </div>
                                     </div>
@@ -90,7 +91,8 @@
                                  as $src)
                                 <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
                                     <label for="exampleInputCity1">Image file</label>
-                                    <img style="width: 100%;height: calc(100px + 5vw)" src="{{ asset("uploads/".$src['src'] ) }}" alt="">
+                                    <img style="width: 100%;height: calc(100px + 5vw)"
+                                         src="{{ asset("uploads/".$src['src'] ) }}" alt="">
                                 </div>
                             @endforeach
                         </div>

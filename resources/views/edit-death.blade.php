@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php $member = $death->member; @endphp
+    @php $member = $death->member @endphp
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 grid-margin stretch-card">
@@ -50,7 +50,8 @@
                                             </label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="{{$info['name']}}" readonly
-                                                       value="{{ old($info['name'], $info['value']) }}" class="form-control"/>
+                                                       value="{{ old($info['name'], $info['value']) }}"
+                                                       class="form-control"/>
                                             </div>
                                             @error($info['name'])
                                             <span class="invalid-feedback d-block" role="alert">
@@ -70,17 +71,21 @@
                                         array('label'=>'Buiral Location', 'name'=>'burial_place', 'type' => 'text', 'value' => $death->burial_place),
                                         ) as $info)
                                     <div class="col-md-6 col-12">
-                                        <div class="form-group row @if($info['type'] != 'textarea') align-items-center @endif required">
+                                        <div
+                                            class="form-group row @if($info['type'] != 'textarea') align-items-center @endif required">
                                             <label class="col-sm-3 col-form-label">
                                                 <span>{{ $info['label'] }}</span>
                                             </label>
                                             <div class="col-sm-9">
-                                            @if($info['type'] == 'text' || $info['type'] == 'date')
-                                                <input type="{{ $info['type'] }}" name="{{$info['name']}}"
-                                                       value="{{ old($info['name'], $info['value']) }}" class="form-control"/>
-                                            @elseif($info['type'] == 'textarea')
-                                                <textarea class="form-control" name="{{$info['name']}}" id="{{$info['name']}}" cols="30" rows="3">{{ old($info['name'], $info['value']) }}</textarea>
-                                            @endif
+                                                @if($info['type'] == 'text' || $info['type'] == 'date')
+                                                    <input type="{{ $info['type'] }}" name="{{$info['name']}}"
+                                                           value="{{ old($info['name'], $info['value']) }}"
+                                                           class="form-control"/>
+                                                @elseif($info['type'] == 'textarea')
+                                                    <textarea class="form-control" name="{{$info['name']}}"
+                                                              id="{{$info['name']}}" cols="30"
+                                                              rows="3">{{ old($info['name'], $info['value']) }}</textarea>
+                                                @endif
                                             </div>
                                             @error($info['name'])
                                             <span class="invalid-feedback d-block" role="alert">
@@ -96,8 +101,11 @@
                                 @for($i=1;$i <= 4; $i++)
                                     <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
                                         <label for="exampleInputCity1">Image file</label>
-                                        <input readonly type="file" name="images[]" data-default-file="{{ asset('uploads/'.$death->{'attached_file'.$i} ) }}" class="dropify" data-height="250"/>
-                                        <input type="hidden" value="{{ $death->{'attached_file'.$i}  }}" name="oldImage[]"/>
+                                        <input readonly type="file" name="images[]"
+                                               data-default-file="{{ asset('uploads/'.$death->{'attached_file'.$i} ) }}"
+                                               class="dropify" data-height="250"/>
+                                        <input type="hidden" value="{{ $death->{'attached_file'.$i}  }}"
+                                               name="oldImage[]"/>
                                     </div>
                                 @endfor
                             </div>
@@ -132,7 +140,7 @@
                                 @enderror
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <a class="btn btn-light" id="back">Cancel</a>
                         </form>
                     </div>
                 </div>
@@ -159,30 +167,33 @@
                 },
                 processResults: function (data) {
                     let items = [];
-                    $(data).each((index, item)=>{
+                    $(data).each((index, item) => {
                         items.push({id: item.id, text: item.name})
                     })
                     return {
-                        results:items,
+                        results: items,
                     };
                 }
             },
-            change: (e)=>{
+            change: (e) => {
                 console.log(e)
             }
 
         });
-        $eventSelect.on("change", function (e) { fetchData($(e.target).val()) });
-        function fetchData(id){
+        $eventSelect.on("change", function (e) {
+            fetchData($(e.target).val())
+        });
+
+        function fetchData(id) {
             $.ajax({
-                'url': '/member-data/'+id,
+                'url': '/member-data/' + id,
                 'Method': 'POST',
                 'content-type': 'json',
                 'processData': false,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:(response)=> {
+                success: (response) => {
                     let names = [
                         {name: 'member_id', value: response.id},
                         {name: 'full_name', value: response.name},
@@ -200,19 +211,19 @@
                     $(names).each((index, name) => {
                         $('[name="' + name.name + '"]').val(name.value)
                     })
-                    $('[name="member_status_ids[]"]').each((index, checkbox)=>{
+                    $('[name="member_status_ids[]"]').each((index, checkbox) => {
                         let ids = JSON.parse(response.member_status_ids);
-                        if(Array.isArray(ids)){
-                            if(ids.includes(checkbox.value)){
+                        if (Array.isArray(ids)) {
+                            if (ids.includes(checkbox.value)) {
                                 $(checkbox).prop('checked', true)
                             }
-                        }else{
+                        } else {
                             $(checkbox).prop('checked', false)
                         }
                     })
-                    $('[name="marital_status_id"]').each((index, checkbox)=>{
+                    $('[name="marital_status_id"]').each((index, checkbox) => {
                         let ids = response.marital_status_id;
-                        if(ids == checkbox.value){
+                        if (ids == checkbox.value) {
                             $(checkbox).prop('checked', true)
                         }
 

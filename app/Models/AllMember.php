@@ -12,7 +12,7 @@ class AllMember extends Model
     protected $dates = ['created_at', 'updated_at', 'last_edited_date'];
 
     public function citizenship(){
-        return $this->hasOne(CitizenshipCountry::class, 'id');
+        return $this->hasOne(CitizenshipCountry::class, 'id', 'citizenship_id');
     }
     public function home_status(){
         return $this->hasOne(Homestatuses::class, 'id', 'home_status_id');
@@ -25,11 +25,11 @@ class AllMember extends Model
     }
 
     public function race(){
-        return $this->hasOne(Genders::class, 'id', 'race_id');
+        return $this->hasOne(Races::class, 'id', 'race_id');
     }
 
     public function religion(){
-        return $this->hasOne(Genders::class, 'id', 'religion_id');
+        return $this->hasOne(Religions::class, 'id', 'religion_id');
     }
 
     public function khairatMember(){

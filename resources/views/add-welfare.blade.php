@@ -11,9 +11,9 @@
                                 <h4 class="card-title mb-3">Registration Of Welfare Help</h4>
                             </div>
                         </div>
-                        <form class="forms-sample" action="{{ route('welfare.store') }}" enctype="multipart/form-data" method="post">
+                        <form class="forms-sample" action="{{ route('welfare.store') }}" enctype="multipart/form-data"
+                              method="post">
                             @csrf
-
                             <div class="form-group is-invalid">
                                 <label>Help Category</label>
                                 <div class="row">
@@ -22,7 +22,8 @@
                                             <div class="form-check form-check-warning">
                                                 <label class="form-check-label">
                                                     {{ $category['name'] }}
-                                                    <input type="radio" name="help_cat_id" value="{{ $category['id'] }}"  @if(old('help_cat_id') == $category['id']) checked @endif
+                                                    <input type="radio" name="help_cat_id" value="{{ $category['id'] }}" @isset($category_id) onclick="event.preventDefault()" @endisset
+                                                           @if(old('help_cat_id', isset($category_id)?$category_id:'') == $category['id']) checked @endif
                                                            class="form-check-input rounded-0">
                                                 </label>
 
@@ -51,19 +52,20 @@
                             </div>
                             <div class="row">
                                 @foreach(array(
-                                        array('label'=>'Applicant Mobile phone', 'name'=>'mobile_phone'),
-                                        array('label'=>'Telephone (Home)', 'name'=>'telephone_one'),
-                                        array('label'=>'IC No', 'name'=>'ic_no'),
-                                        array('label'=>'Marital Status', 'name'=>'marital_status'),
-                                        array('label'=>'Jalan', 'name'=>'jalan'),
-                                        array('label'=>'Date Of Birth', 'name'=>'birth_date'),
-                                        array('label'=>'Seksyen', 'name'=>'seksyen'),
-                                        array('label'=>'Date Starts of Stay', 'name'=>'start_of_stay')) as $info)
+                                        array('label'=>'Applicant Mobile phone', 'name'=>'mobile_phone', 'required' => true),
+                                        array('label'=>'Telephone (Home)', 'name'=>'telephone_one', 'required' => true),
+                                        array('label'=>'IC No', 'name'=>'ic_no', 'required' => true),
+                                        array('label'=>'Marital Status', 'name'=>'marital_status', 'required' => true),
+                                        array('label'=>'Jalan', 'name'=>'jalan', 'required' => true),
+                                        array('label'=>'Date Of Birth', 'name'=>'birth_date', 'required' => true),
+                                        array('label'=>'Seksyen', 'name'=>'seksyen', 'required' => true),
+                                        array('label'=>'Date Starts of Stay', 'name'=>'start_of_stay', 'required' => false)) as $info)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row align-items-center">
-                                            <label class="col-sm-3 col-form-label">{{ $info['label'] }}</label>
+                                            <label class="col-sm-3 col-form-label "><span>{{ $info['label'] }}</span></label>
                                             <div class="col-sm-9">
-                                                <input type="text" readonly name="{{$info['name']}}" value="{{ old($info['name']) }}" class="form-control"/>
+                                                <input type="text" readonly name="{{$info['name']}}"
+                                                       value="{{ old($info['name']) }}" class="form-control"/>
                                             </div>
                                             @error($info['name'])
                                             <span class="invalid-feedback d-block" role="alert">
@@ -79,15 +81,16 @@
                                 <div class="row">
                                     @for($i=0;$i<5;$i++)
                                         @php
-                                            $cyear = \Carbon\Carbon::today()->format('Y');
+                                            $cyear = Carbon\Carbon::today()->format('Y');
                                             $start = $cyear - 5;
-                                            $end = ($cyear) + (5);
+                                            $end = ($cyear) + (5)
                                         @endphp
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <select class="form-control" name="years[]">
-                                                <option>Select Year</option>
+                                                <option value="">Select Year</option>
                                                 @for($start ; $start < $end; $start++)
-                                                    <option value="{{ $start }}"  @if(old('years[]') == $start) selected @endif>{{ $start }}</option>
+                                                    <option value="{{ $start }}"
+                                                            @if(old('years[]') == $start) selected @endif>{{ $start }}</option>
                                                 @endfor
                                             </select>
                                         </div>
@@ -106,7 +109,8 @@
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <div class="form-check form-check-warning">
                                                 <label class="form-check-label">
-                                                    <input type="radio" name="current_job"  value="{{ $job }}"  @if(old('current_job') == $job) checked @endif
+                                                    <input type="radio" name="current_job" value="{{ $job }}"
+                                                           @if(old('current_job') == $job) checked @endif
                                                            class="form-check-input rounded-0">
                                                     {{ $job }}
                                                 </label>
@@ -123,7 +127,7 @@
                             <div class="form-group row align-items-center unemployed collapsed">
                                 <label class="">Un Employed Reason</label>
                                 <div class="col-sm-9">
-                                    <input type="text" name="unemployed_reason" class="form-control"/>
+                                    <input type="text" name="unemployed_reason" value="{{ old('unemployed_reason') }}" class="form-control"/>
                                 </div>
                                 @error('unemployed_reason')
                                 <span class="invalid-feedback d-block" role="alert">
@@ -132,7 +136,7 @@
                                 @enderror
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group sector">
                                 <label>Swctor</label>
                                 <div class="row">
                                     @foreach($job_sectors as $sector)
@@ -160,7 +164,8 @@
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <div class="form-check form-check-warning">
                                                 <label class="form-check-label">
-                                                <input type="radio" name="home_status_id" value="{{ $place['id'] }}"  @if(old('home_status_id') == $place['id']) checked @endif
+                                                    <input type="radio" name="home_status_id" value="{{ $place['id'] }}"
+                                                           @if(old('home_status_id') == $place['id']) checked @endif
                                                            class="form-check-input">
                                                     {{ $place['name'] }}
                                                 </label>
@@ -176,7 +181,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="exampleTextarea1">Summary</label>
-                                <textarea class="form-control" name="summary" id="exampleTextarea1" rows="4">{{ old('summary') }}</textarea>
+                                <textarea class="form-control" name="summary" id="exampleTextarea1"
+                                          rows="4">{{ old('summary') }}</textarea>
                                 @error('summary')
                                 <span class="invalid-feedback d-block" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -205,7 +211,9 @@
                                         <div class="form-group row align-items-center">
                                             <label class="col-sm-3 col-form-label">{{ $info['label'] }}</label>
                                             <div class="col-sm-9">
-                                                <input type="{{ $info['type'] }}" placeholder="{{ $info['label'] }}" name="{{$info['name']}}" value="{{ old($info['name']) }}" class="form-control"/>
+                                                <input type="{{ $info['type'] }}" placeholder="{{ $info['label'] }}"
+                                                       name="{{$info['name']}}" value="{{ old($info['name']) }}"
+                                                       class="form-control"/>
                                             </div>
                                             @error($info['name'])
                                             <span class="invalid-feedback d-block" role="alert">
@@ -217,7 +225,7 @@
                                 @endforeach
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <a class="btn btn-light" id="back">Cancel</a>
                         </form>
                     </div>
                 </div>
@@ -244,30 +252,33 @@
                 },
                 processResults: function (data) {
                     let items = [];
-                    $(data).each((index, item)=>{
+                    $(data).each((index, item) => {
                         items.push({id: item.id, text: item.name})
                     })
                     return {
-                        results:items,
+                        results: items,
                     };
                 }
             },
-            change: (e)=>{
+            change: (e) => {
                 console.log(e)
             }
 
         });
-        $eventSelect.on("change", function (e) { fetchData($(e.target).val()) });
-        function fetchData(id){
+        $eventSelect.on("change", function (e) {
+            fetchData($(e.target).val())
+        });
+
+        function fetchData(id) {
             $.ajax({
-                'url': '/member-data/'+id,
+                'url': '/member-data/' + id,
                 'Method': 'POST',
                 'content-type': 'json',
                 'processData': false,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:(response)=> {
+                success: (response) => {
                     let names = [
                         {name: 'member_id', value: response.id},
                         {name: 'mobile_phone', value: response.mobile_phone},
@@ -283,13 +294,13 @@
                     $(names).each((index, name) => {
                         $('[name="' + name.name + '"]').val(name.value)
                     })
-                    $('[name="member_status_ids[]"]').each((index, checkbox)=>{
+                    $('[name="member_status_ids[]"]').each((index, checkbox) => {
                         let ids = JSON.parse(response.member_status_ids);
-                        if(Array.isArray(ids)){
-                            if(ids.includes(checkbox.value)){
+                        if (Array.isArray(ids)) {
+                            if (ids.includes(checkbox.value)) {
                                 $(checkbox).prop('checked', true)
                             }
-                        }else{
+                        } else {
                             $(checkbox).prop('checked', false)
                         }
                     })
@@ -298,17 +309,11 @@
         }
 
         let current_job = $("input[name='current_job']");
-        current_job.click(()=>{
+        current_job.click(() => {
             checkJOb();
         })
         checkJOb();
-        function checkJOb(){
-            if($("input[name='current_job']:checked").val() === 'Un Employed'){
-                $('.unemployed').show();
-            }else{
-                $('.unemployed').hide();
-            }
-        }
+
 
         $('.dropify').dropify();
     </script>

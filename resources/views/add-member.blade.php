@@ -24,7 +24,7 @@
                                                 <span>{{ $info['label'] }}</span>
                                             </label>
                                             <div class="col-sm-9">
-                                                <input type="text" name="{{$info['name']}}"
+                                                <input type="text" placeholder="{{$info['label']}}" name="{{$info['name']}}"
                                                        value="{{ old($info['name']) }}" class="form-control"/>
                                             </div>
                                             @error($info['name'])
@@ -67,8 +67,8 @@
                                         array('label'=>'Date of Birth', 'name'=>'birth_date', 'type' => 'date', 'required' => true),
                                         array('label'=>'Citizenship', 'name'=>'citizenship', 'type' => 'select', 'required'=> true, 'values' => $citizenshipCounties, 'default' => 'Select Country'),
                                         array('label'=>'Gender', 'name'=>'gender', 'type' => 'select', 'required' => false, 'default' => 'Select Gender', 'values' => $genders),
-                                        array('label'=>'Race', 'name'=>'race', 'type' => 'select', 'required' => false, 'default' => 'Select Country', 'values' => $races),
-                                        array('label'=>'Religion', 'name'=>'religion', 'type' => 'select', 'required' => false, 'default' => 'Select Religion', 'values' => $religions),
+                                        array('label'=>'Race', 'name'=>'race_id', 'type' => 'select', 'required' => false, 'default' => 'Select Race', 'values' => $races),
+                                        array('label'=>'Religion', 'name'=>'religion_id', 'type' => 'select', 'required' => false, 'default' => 'Select Religion', 'values' => $religions),
                                         ) as $data)
                                     <div class="col-md-3 col-6">
                                         <div class="form-group @if($data['required']) required @endif">
@@ -76,7 +76,7 @@
                                                 <span>{{$data['label']}}</span>
                                             </label>
                                             @if($data['type'] == 'text' || $data['type'] == 'date')
-                                                <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                <input type="{{ $data['type'] }}" placeholder="{{$data['label']}}" name="{{$data['name']}}"
                                                        value="{{ old($data['name']) }}" class="form-control"/>
                                             @elseif($data['type'] == 'select')
                                                 <select class="form-control" name="{{$data['name']}}">
@@ -138,7 +138,7 @@
                                             <div class="form-group row align-items-center">
                                                 <label class="col-sm-3 col-form-label">{{ $info['label'] }}</label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="{{$info['name']}}"
+                                                    <input type="text" placeholder="{{$info['label']}}" name="{{$info['name']}}"
                                                            value="{{ old($info['name']) }}" class="form-control"/>
                                                 </div>
                                                 @error($info['name'])
@@ -156,6 +156,7 @@
                                             array('label'=>'Town', 'name'=>'ic_city', 'type' => 'text', 'required' => false),
                                             array('label'=>'District', 'name'=>'ic_district', 'type' => 'text', 'required' => false),
                                             array('label'=>'State', 'name'=>'ic_state_id', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' => $states),
+                                            array('label'=>'Section', 'name'=>'ic_section', 'type' => 'text', 'required' => false),
                                             ) as $data)
                                         <div class="col-md-3 col-6">
                                             <div class="form-group @if($data['required']) required @endif">
@@ -163,14 +164,13 @@
                                                     <span>{{$data['label']}}</span>
                                                 </label>
                                                 @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
-                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                    <input type="{{ $data['type'] }}" placeholder="{{$data['label']}}" value="{{ old($data['name']) }}" name="{{$data['name']}}"
                                                            class="form-control"/>
                                                 @elseif($data['type'] == 'select')
                                                     <select class="form-control" name="{{$data['name']}}">
                                                         <option value="">{{ $data['default'] }}</option>
                                                         @foreach($data['values'] as $value)
-                                                            <option value="{{ old($value['id']) }}"
-                                                                    value="{{ old($data['name']) }}">{{ $value['name'] }}</option>
+                                                            <option value="{{ $value['id'] }}" @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 @endif
@@ -202,7 +202,7 @@
                                                     <span>{{ $info['label'] }}</span>
                                                 </label>
                                                 <div class="col-sm-9">
-                                                    <input type="text" name="{{$info['name']}}"
+                                                    <input type="text" placeholder="{{ $info['label'] }}" name="{{ $info['name']}}"
                                                            value="{{ old($info['name']) }}" class="form-control"/>
                                                 </div>
                                                 @error($info['name'])
@@ -221,6 +221,7 @@
                                             array('label'=>'Town', 'name'=>'home_city', 'type' => 'text', 'required' => false),
                                             array('label'=>'District', 'name'=>'home_district', 'type' => 'text', 'required' => false),
                                             array('label'=>'State', 'name'=>'home_state_id', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' =>$states),
+                                            array('label'=>'Section', 'name'=>'home_section', 'type' => 'text', 'required' => false),
                                             ) as $data)
                                         <div class="col-md-3 col-6">
                                             <div class="form-group @if($data['required']) required @endif">
@@ -228,14 +229,14 @@
                                                     <span>{{$data['label']}}</span>
                                                 </label>
                                                 @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
-                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                    <input type="{{ $data['type'] }}" placeholder="{{$data['label']}}" name="{{$data['name']}}"
                                                            value="{{ old($data['name']) }}" class="form-control"/>
                                                 @elseif($data['type'] == 'select')
                                                     <select class="form-control" name="{{$data['name']}}">
                                                         <option value="">{{ $data['default'] }}</option>
                                                         @foreach($data['values'] as $value)
                                                             <option value="{{ $value['id'] }}"
-                                                                    @if(old($data['name']) == $value['name']) selected @endif>{{ $value['name'] }}</option>
+                                                                    @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 @endif
@@ -257,6 +258,8 @@
                                         array('label'=>'Telephone (Home)', 'name'=>'telephone_one', 'type' => 'text', 'required' => false),
                                         array('label'=>'Telephone (Hand phone)', 'name'=>'mobile_phone', 'type' => 'text', 'required' => true),
                                         array('label'=>'Email', 'name'=>'email', 'type' => 'email', 'required' => false),
+                                        array('label'=>'Beneficiary Name', 'name'=>'beneficiary_name', 'type' => 'text', 'required' => false),
+                                        array('label'=>'Beneficiary IC Num', 'name'=>'beneficiary_ic', 'type' => 'text', 'required' => false),
                                         ) as $data)
                                     <div class="col-md-3 col-6">
                                         <div class="form-group @if($data['required']) required @endif">
@@ -264,7 +267,7 @@
                                                 <span>{{$data['label']}}</span>
                                             </label>
                                             @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
-                                                <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                <input type="{{ $data['type'] }}" placeholder="{{$data['label']}}" name="{{$data['name']}}"
                                                        value="{{ old($data['name']) }}" class="form-control"/>
                                             @elseif($data['type'] == 'select')
                                                 <select class="form-control" name="{{$data['name']}}">
@@ -300,7 +303,7 @@
                                             </span>
                             @enderror
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <a class="btn btn-light" id="back">Cancel</a>
                         </form>
                     </div>
                 </div>

@@ -24,12 +24,14 @@ return new class extends Migration
             $table->string('home_district', 255)->nullable();
             $table->bigInteger('home_state_id')->unsigned()->nullable();
             $table->bigInteger('home_status_id')->unsigned()->nullable();
+            $table->string('home_section', 255)->nullable();
             $table->string('ic_address1', 255)->nullable();
             $table->string('ic_address2', 255)->nullable();
             $table->string('ic_address3', 255)->nullable();
             $table->string('ic_city', 255)->nullable();
             $table->string('ic_postcode', 255)->nullable();
             $table->string('ic_district', 255)->nullable();
+            $table->string('ic_section', 255)->nullable();
             $table->bigInteger('ic_state_id')->unsigned()->nullable();
             $table->bigInteger('family_status_id')->unsigned()->nullable();
             $table->bigInteger('citizenship_id')->unsigned()->nullable();;
@@ -47,7 +49,6 @@ return new class extends Migration
             $table->date('end_of_stay')->nullable();
             $table->string('active_status', 55)->nullable();
             $table->text('active_status_note')->nullable();
-            $table->string('job', 55)->nullable();
             $table->bigInteger('gender_id')->unsigned()->nullable();
             $table->string('attache_file1', 255)->nullable();
             $table->string('attache_file2', 255)->nullable();
@@ -57,7 +58,9 @@ return new class extends Migration
             $table->string('current_job', 55)->nullable();
             $table->bigInteger('current_job_sector_id')->unsigned()->nullable();
             $table->text('unemployed_reason')->nullable();
-            $table->string('member_status_ids', 255)->nullable();;
+            $table->string('member_status_ids', 255)->nullable();
+            $table->string('beneficiary_name', 255)->nullable();
+            $table->string('beneficiary_ic', 255)->nullable();
             $table->timestamps();
 
             $table->foreign('home_status_id')->on('homestatuses')->references('id')->onDelete('cascade');

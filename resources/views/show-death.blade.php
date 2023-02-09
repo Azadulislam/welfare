@@ -24,43 +24,45 @@
                     @include('layouts.errors')
                     <table id="example" class="table table-theme">
                         <thead>
-                            <tr>
-                                <th class="">Name</th>
-                                <th class="">Identification No</th>
-                                <th class="">Date Become Member</th>
-                                <th class="">Telephone</th>
-                                <th class="">Address</th>
-                                <th class=""><span class="sr-only">Action</span></th>
-                            </tr>
+                        <tr>
+                            <th class="">Name</th>
+                            <th class="">Identification No</th>
+                            <th class="">Date Become Member</th>
+                            <th class="">Telephone</th>
+                            <th class="">Address</th>
+                            <th class=""><span class="sr-only">Action</span></th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($members as $member)
-                        <tr>
-                            <td>{{ $member->member['name'] }}</td>
-                            <td>{{ $member->member['ic_no'] }}</td>
-                            <td>{{ $member['member_start_date'] }}</td>
-                            <td>{{ $member->member['mobile_phone'] }}</td>
-                            <td>{{ $member->member['home_address1'] }}</td>
-                            <td>
-                                <div class="flex flex-row gap-2">
-                                    <a href="{{ route('khairat-member.show', $member->member['id']) }}"
-                                       class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
-                                        <i class="fa-solid fa-eye w-[30px]  text-center leading-[30px]"></i>
-                                    </a>
-                                    <a href="{{ route('khairat-member.edit', $member->member['id']) }}"
-                                       class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
-                                        <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
-                                    </a>
-                                    <form class="d-inline-block" method="post" action="{{ route('khairat-member.destroy', $member->member['id']) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
-                                            <i class="fa-solid fa-trash-can w-[30px] text-center leading-[30px]"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{{ $member->member['name'] }}</td>
+                                <td>{{ $member->member['ic_no'] }}</td>
+                                <td>{{ $member['member_start_date'] }}</td>
+                                <td>{{ $member->member['mobile_phone'] }}</td>
+                                <td>{{ $member->member['home_address1'] }}</td>
+                                <td>
+                                    <div class="flex flex-row gap-2">
+                                        <a href="{{ route('khairat-member.show', $member->member['id']) }}"
+                                           class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
+                                            <i class="fa-solid fa-eye w-[30px]  text-center leading-[30px]"></i>
+                                        </a>
+                                        <a href="{{ route('khairat-member.edit', $member->member['id']) }}"
+                                           class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
+                                            <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
+                                        </a>
+                                        <form class="d-inline-block" method="post"
+                                              action="{{ route('khairat-member.destroy', $member->member['id']) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit"
+                                                    class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
+                                                <i class="fa-solid fa-trash-can w-[30px] text-center leading-[30px]"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

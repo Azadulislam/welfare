@@ -48,8 +48,9 @@ class RelationShipController extends Controller
             $relation->relation_id = $request->relation_id;
             $relation->related_to_id = $request->related_to_id;
             $relation->member_id = $request->member_id;
-
             $relation->save();
+            $details = 'New relationship added';
+            addActivity($relation->id, $details);
         }else{
             $request->validate([
                 'member_name' => 'required',
@@ -64,12 +65,18 @@ class RelationShipController extends Controller
             $allMember->mobile_phone = $request->telephone;
             $allMember->save();
 
+            $details = 'New member added';
+            addActivity($allMember->id, $details);
+
             $relation = new RelationShip();
             $relation->relation_id = $request->relation_id;
             $relation->related_to_id = $allMember->id;
             $relation->member_id = $request->member_id;
 
             $relation->save();
+
+            $details = 'New relationship added';
+            addActivity($relation->id, $details);
         }
 
         return redirect()->route('member.family', $request->member_id)->with('alert-success', 'Relationship added successfully');
@@ -120,6 +127,11 @@ class RelationShipController extends Controller
     {
         $relationShip = RelationShip::where('id', '=', $relationShip)->first();
         $member_id = $relationShip->member_id;
+
+
+        $details = 'One relationship Deleted';
+        addActivity($relationShip->id, $details);
+
         $relationShip->delete();
         return redirect()->route('member.family', $member_id)->with('alert-danger', 'Relationship Deleted successfully');
     }

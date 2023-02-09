@@ -67,6 +67,9 @@ class DeathController extends Controller
 
         $memorial_service->save();
 
+        $details = 'Member Death Registered';
+        addActivity($memorial_service->id, $details);
+
         return redirect()->route('death.index')->with('alert-success', 'Died Member added successfully');
     }
 
@@ -131,6 +134,9 @@ class DeathController extends Controller
 
         $death->update();
 
+        $details = 'Member Death Updated';
+        addActivity($death->id, $details);
+
         return redirect()->route('death.index')->with('alert-success', 'Died Member updated successfully');
     }
 
@@ -152,6 +158,8 @@ class DeathController extends Controller
                 }
             }
         }
+        $details = 'One members death info deleted';
+        addActivity($death->id, $details);
         $death->delete();
         return redirect()->route('death.index')->with('alert-warning', 'Died Member deleted successfully');
     }
@@ -185,7 +193,7 @@ class DeathController extends Controller
      *
      * @param Request $request
      * @param Death $death
-     * @return void
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function burialPaymentUpdate(Request $request, Death $death)
     {
@@ -198,6 +206,9 @@ class DeathController extends Controller
         $death->service_cost = $request->service_cost;
         $death->last_edited_date = Carbon::today()->format('Y-m-d');
         $death->update();
+
+        $details = 'Burial payment added';
+        addActivity($death->id, $details);
 
         return redirect()->route('burial.payment.index')->with('alert-success', 'Burial updated successfully');
     }

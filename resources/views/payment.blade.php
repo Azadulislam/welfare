@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    @php $member = $welfare_service->member; @endphp
+    @php $member = $welfare_service->member @endphp
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-12 grid-margin stretch-card">
@@ -15,8 +15,8 @@
                         <form class="forms-sample" action="{{ route('help-provided.store') }}" method="post"
                               enctype="multipart/form-data">
                             @csrf
-                            @method('put')
-                            <input type="hidden" value="{{ $member->id  }}" name="id">
+                            @method('POST')
+                            <input type="hidden" value="{{ $member->id  }}" name="member_id">
                             <input type="hidden" name="welfare_id" value="{{ $welfare_service->id }}">
                             <div class="row">
                                 @foreach(array(
@@ -53,7 +53,7 @@
                                         array('label'=>'Date', 'name'=>'date', 'type' => 'date', 'required' => true),
                                         array('label'=>'Help Category', 'name'=>'help_cat_id', 'type' => 'select', 'required'=> true, 'values' => $help_cats, 'default' => 'Select Country'),
                                         array('label'=>'Total RM', 'name'=>'service_cost', 'type' => 'text', 'required' => true),
-                                        array('label'=>'Type Of Help', 'name'=>'hel_type_id', 'type' => 'select', 'required' => false, 'default' => 'Select Category First', 'values' => [])
+                                        array('label'=>'Type Of Help', 'name'=>'help_type_id', 'type' => 'select', 'required' => false, 'default' => 'Select Category First', 'values' => [])
                                         ) as $data)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row @if($data['required']) required @endif">
@@ -61,18 +61,18 @@
                                                 <span>{{$data['label']}}</span>
                                             </label>
                                             <div class="col-sm-9">
-                                            @if($data['type'] == 'text' || $data['type'] == 'date')
-                                                <input type="{{ $data['type'] }}" name="{{$data['name']}}"
-                                                       value="{{ old($data['name']) }}" class="form-control"/>
-                                            @elseif($data['type'] == 'select')
-                                                <select class="form-control" name="{{$data['name']}}">
-                                                    <option value="">{{ $data['default'] }}</option>
-                                                    @foreach($data['values'] as $value)
-                                                        <option value="{{ $value['id'] }}"
-                                                                @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            @endif
+                                                @if($data['type'] == 'text' || $data['type'] == 'date')
+                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                           value="{{ old($data['name']) }}" class="form-control"/>
+                                                @elseif($data['type'] == 'select')
+                                                    <select class="form-control" name="{{$data['name']}}">
+                                                        <option value="">{{ $data['default'] }}</option>
+                                                        @foreach($data['values'] as $value)
+                                                            <option value="{{ $value['id'] }}"
+                                                                    @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @endif
                                             </div>
 
                                             @error($data['name'])
@@ -87,7 +87,8 @@
                             <div class="form-group row">
                                 <label class="col-sm-3 col-md-2 col-form-label" for="exampleTextarea1">Summary</label>
                                 <div class="col-sm-9 col-md-10">
-                                <textarea class="form-control" name="summary" id="exampleTextarea1" rows="4">{{ old('summary') }}</textarea>
+                                    <textarea class="form-control" name="summary" id="exampleTextarea1"
+                                              rows="4">{{ old('summary') }}</textarea>
                                 </div>
                                 @error('summary')
                                 <span class="invalid-feedback d-block" role="alert">
@@ -108,18 +109,18 @@
                                                 <span>{{$data['label']}}</span>
                                             </label>
                                             <div class="col-sm-9">
-                                            @if($data['type'] == 'text' || $data['type'] == 'date')
-                                                <input type="{{ $data['type'] }}" name="{{$data['name']}}"
-                                                       value="{{ old($data['name']) }}" class="form-control"/>
-                                            @elseif($data['type'] == 'select')
-                                                <select class="form-control" name="{{$data['name']}}">
-                                                    <option value="">{{ $data['default'] }}</option>
-                                                    @foreach($data['values'] as $value)
-                                                        <option value="{{ $value['id'] }}"
-                                                                @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
-                                                    @endforeach
-                                                </select>
-                                            @endif
+                                                @if($data['type'] == 'text' || $data['type'] == 'date')
+                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                           value="{{ old($data['name']) }}" class="form-control"/>
+                                                @elseif($data['type'] == 'select')
+                                                    <select class="form-control" name="{{$data['name']}}">
+                                                        <option value="">{{ $data['default'] }}</option>
+                                                        @foreach($data['values'] as $value)
+                                                            <option value="{{ $value['id'] }}"
+                                                                    @if(old($data['name']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                @endif
                                             </div>
 
                                             @error($data['name'])
@@ -146,7 +147,7 @@
                             </span>
                             @enderror
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <a class="btn btn-light" id="back">Cancel</a>
                         </form>
                     </div>
                 </div>
@@ -159,23 +160,23 @@
     <script>
         $('.dropify').dropify();
 
-        $('[name="help_cat_id"]').change((e)=>{
+        $('[name="help_cat_id"]').change((e) => {
             let category = $(e.currentTarget).val();
             $.ajax({
-                'url': '/type/'+category,
+                'url': '/type/' + category,
                 'method': 'get',
                 'content-type': 'json',
                 'processDwata': false,
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
                 },
-                success:(response)=> {
-                    let typeEl = $('[name="hel_type_id"]');
+                success: (response) => {
+                    let typeEl = $('[name="help_type_id"]');
                     typeEl.html('<option>Select Type</select>');
-                    $(response.data).each((index, data)=>{
-                        typeEl.append('<option value="'+data.id+'">'+data.name+'</select>')
+                    $(response.data).each((index, data) => {
+                        typeEl.append('<option value="' + data.id + '">' + data.name + '</select>')
                     })
-                    if(response.data.length < 1){
+                    if (response.data.length < 1) {
                         typeEl.html('<option>Select Category First</select>');
                     }
 

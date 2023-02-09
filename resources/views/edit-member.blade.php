@@ -27,7 +27,8 @@
                                             </label>
                                             <div class="col-sm-9">
                                                 <input type="text" name="{{$info['name']}}"
-                                                       value="{{ old($info['name'], $info['value']) }}" class="form-control"/>
+                                                       value="{{ old($info['name'], $info['value']) }}"
+                                                       class="form-control"/>
                                             </div>
                                             @error($info['name'])
                                             <span class="invalid-feedback d-block" role="alert">
@@ -67,9 +68,9 @@
                             <div class="row">
                                 @foreach(array(
                                         array('label'=>'Date of Birth', 'name'=>'birth_date', 'type' => 'date', 'required' => true, 'value' => $member->birth_date),
-                                        array('label'=>'Citizenship', 'name'=>'citizenship', 'type' => 'select', 'required'=> true, 'values' => $citizenshipCounties, 'default' => 'Select Country', 'value' => $member->citizenshipCountry),
-                                        array('label'=>'Gender', 'name'=>'gender', 'type' => 'select', 'required' => false, 'default' => 'Select Gender', 'values' => $genders, 'value' => $member->gender),
-                                        array('label'=>'Race', 'name'=>'race', 'type' => 'select', 'required' => false, 'default' => 'Select Country', 'values' => $races, 'value' => $member->race_id),
+                                        array('label'=>'Citizenship', 'name'=>'citizenship', 'type' => 'select', 'required'=> true, 'values' => $citizenshipCounties, 'default' => 'Select Country', 'value' => $member->citizenship_id),
+                                        array('label'=>'Gender', 'name'=>'gender', 'type' => 'select', 'required' => false, 'default' => 'Select Gender', 'values' => $genders, 'value' => $member->gender_id),
+                                        array('label'=>'Race', 'name'=>'race_id', 'type' => 'select', 'required' => false, 'default' => 'Select Race', 'values' => $races, 'value' => $member->race_id),
                                         array('label'=>'Religion', 'name'=>'religion', 'type' => 'select', 'required' => false, 'default' => 'Select Religion', 'values' => $religions, 'value' => $member->religion_id),
                                         ) as $data)
                                     <div class="col-md-3 col-6">
@@ -79,7 +80,8 @@
                                             </label>
                                             @if($data['type'] == 'text' || $data['type'] == 'date')
                                                 <input type="{{ $data['type'] }}" name="{{$data['name']}}"
-                                                       value="{{ old($data['name'], $data['value']) }}" class="form-control"/>
+                                                       value="{{ old($data['name'], $data['value']) }}"
+                                                       class="form-control"/>
                                             @elseif($data['type'] == 'select')
                                                 <select class="form-control" name="{{$data['name']}}">
                                                     <option value="">{{ $data['default'] }}</option>
@@ -141,7 +143,8 @@
                                                 <label class="col-sm-3 col-form-label">{{ $info['label'] }}</label>
                                                 <div class="col-sm-9">
                                                     <input type="text" name="{{$info['name']}}"
-                                                           value="{{ old($info['name'], $info['value']) }}" placeholder="{{ $info['label'] }}" class="form-control"/>
+                                                           value="{{ old($info['name'], $info['value']) }}"
+                                                           placeholder="{{ $info['label'] }}" class="form-control"/>
                                                 </div>
                                                 @error($info['name'])
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -157,8 +160,7 @@
                                             array('label'=>'Postcode', 'name'=>'ic_postcode', 'type' => 'text', 'required' => false, 'value' => $member->ic_postcode),
                                             array('label'=>'Town', 'name'=>'ic_city', 'type' => 'text', 'required' => false, 'value' => $member->ic_city),
                                             array('label'=>'District', 'name'=>'ic_district', 'type' => 'text', 'required' => false, 'value' => $member->ic_district),
-                                            array('label'=>'State', 'name'=>'ic_state', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' => array(
-                                                array('name' => 'Bangladesh'), array('name' => 'Malaysia'), array('name' => 'India')), 'value' => $member->ic_state),
+                                            array('label'=>'State', 'name'=>'ic_state', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' => $states, 'value' => $member->ic_state_id),
                                             ) as $data)
                                         <div class="col-md-3 col-6">
                                             <div class="form-group @if($data['required']) required @endif">
@@ -166,13 +168,15 @@
                                                     <span>{{$data['label']}}</span>
                                                 </label>
                                                 @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
-                                                    <input type="{{ $data['type'] }}" placeholder="{{ $data['label'] }}" value="{{ $data['value'] }}" name="{{$data['name']}}"
+                                                    <input type="{{ $data['type'] }}" placeholder="{{ $data['label'] }}"
+                                                           value="{{ $data['value'] }}" name="{{$data['name']}}"
                                                            class="form-control"/>
                                                 @elseif($data['type'] == 'select')
                                                     <select class="form-control" name="{{$data['name']}}">
                                                         <option value="">{{ $data['default'] }}</option>
                                                         @foreach($data['values'] as $value)
-                                                            <option value="{{ old($value['name'], $data['value']) }}">{{ $value['name'] }}</option>
+                                                            <option
+                                                                value="{{ $value['id'] }}"  @if(old($data['name'], $data['value']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 @endif
@@ -205,7 +209,8 @@
                                                 </label>
                                                 <div class="col-sm-9">
                                                     <input type="text" name="{{$info['name']}}"
-                                                           value="{{ old($info['name'], $info['value']) }}" placeholder="{{ $info['label'] }}"  class="form-control"/>
+                                                           value="{{ old($info['name'], $info['value']) }}"
+                                                           placeholder="{{ $info['label'] }}" class="form-control"/>
                                                 </div>
                                                 @error($info['name'])
                                                 <span class="invalid-feedback d-block" role="alert">
@@ -222,8 +227,7 @@
                                             array('label'=>'Postcode', 'name'=>'home_postcode', 'type' => 'text', 'required' => false, 'value' => $member->home_postcode),
                                             array('label'=>'Town', 'name'=>'home_city', 'type' => 'text', 'required' => false, 'value' => $member->home_city),
                                             array('label'=>'District', 'name'=>'home_district', 'type' => 'text', 'required' => false, 'value' => $member->home_district),
-                                            array('label'=>'State', 'name'=>'home_state', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' => array(
-                                                array('name' => 'Bangladesh'), array('name' => 'Malaysia'), array('name' => 'India')), 'value' => $member->home_state),
+                                            array('label'=>'State', 'name'=>'home_state', 'type' => 'select', 'required'=> false, 'default' => 'Select State', 'values' => $states, 'value' => $member->home_state_id),
                                             ) as $data)
                                         <div class="col-md-3 col-6">
                                             <div class="form-group @if($data['required']) required @endif">
@@ -231,14 +235,16 @@
                                                     <span>{{$data['label']}}</span>
                                                 </label>
                                                 @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
-                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}" placeholder="{{ $data['label'] }}"
-                                                           value="{{ old($data['name'], $data['value']) }}" class="form-control"/>
+                                                    <input type="{{ $data['type'] }}" name="{{$data['name']}}"
+                                                           placeholder="{{ $data['label'] }}"
+                                                           value="{{ old($data['name'], $data['value']) }}"
+                                                           class="form-control"/>
                                                 @elseif($data['type'] == 'select')
                                                     <select class="form-control" name="{{$data['name']}}">
                                                         <option value="">{{ $data['default'] }}</option>
                                                         @foreach($data['values'] as $value)
-                                                            <option value="{{ $value['name'] }}"
-                                                                    @if(old($data['name'], $data['value']) == $value['name']) selected @endif>{{ $value['name'] }}</option>
+                                                            <option value="{{ $value['id'] }}"
+                                                                    @if(old($data['name'], $data['value']) == $value['id']) selected @endif>{{ $value['name'] }}</option>
                                                         @endforeach
                                                     </select>
                                                 @endif
@@ -268,7 +274,8 @@
                                             </label>
                                             @if($data['type'] == 'text' || $data['type'] == 'date' || $data['type'] == 'email')
                                                 <input type="{{ $data['type'] }}" name="{{$data['name']}}"
-                                                       value="{{ old($data['name'], $data['value']) }}" class="form-control"/>
+                                                       value="{{ old($data['name'], $data['value']) }}"
+                                                       class="form-control"/>
                                             @elseif($data['type'] == 'select')
                                                 <select class="form-control" name="{{$data['name']}}">
                                                     <option>{{ $data['default'] }}</option>
@@ -292,8 +299,11 @@
                                 @for($i=0;$i< 4; $i++)
                                     <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
                                         <label for="exampleInputCity1">Image file</label>
-                                        <input type="file" name="images[]" class="dropify" data-default-file="{{ asset('uploads/'.$member->{'attache_file'.($i + 1)}) }}" data-height="250"/>
-                                        <input type="hidden" value="{{ $member->{'attache_file'.($i + 1)} }}" name="oldImages[{{$i}}]"/>
+                                        <input type="file" name="images[]" class="dropify"
+                                               data-default-file="{{ asset('uploads/'.$member->{'attache_file'.($i + 1)}) }}"
+                                               data-height="250"/>
+                                        <input type="hidden" value="{{ $member->{'attache_file'.($i + 1)} }}"
+                                               name="oldImages[{{$i}}]"/>
                                     </div>
                                 @endfor
                             </div>
@@ -303,7 +313,7 @@
                             </span>
                             @enderror
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
-                            <button class="btn btn-light">Cancel</button>
+                            <a class="btn btn-light" id="back">Cancel</a>
                         </form>
                     </div>
                 </div>

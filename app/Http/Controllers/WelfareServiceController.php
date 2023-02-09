@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UpdatePaymentRequirest;
 use App\Http\Resources\TypesResoure;
+use App\Models\ActivityLog;
 use App\Models\AllMember;
 use App\Models\CitizenshipCountry;
 use App\Models\Genders;
@@ -17,6 +18,8 @@ use App\Models\WelfareService;
 use App\Http\Requests\StoreWelfareServiceRequest;
 use App\Http\Requests\UpdateWelfareServiceRequest;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class WelfareServiceController extends Controller
 {
@@ -49,6 +52,19 @@ class WelfareServiceController extends Controller
         $help_categories = HelpCategory::all();
         return view('add-welfare', compact('member_statuses', 'job_sectors', 'home_types', 'help_categories'));
     }
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function welfareCreate($category_id = null)
+    {
+        $member_statuses = MemberStatuses::all();
+        $job_sectors = JobSectors::all();
+        $home_types = Homestatuses::all();
+        $help_categories = HelpCategory::all();
+        return view('add-welfare', compact('member_statuses', 'job_sectors', 'home_types', 'help_categories', 'category_id'));
+    }
 
     /**
      * Display the specified resource.
@@ -60,7 +76,6 @@ class WelfareServiceController extends Controller
     {
 
         $citizenshipCounties = CitizenshipCountry::all();
-        $genders = Genders::all();
         $help_cats = HelpCategory::all();
         return view('payment', compact('welfare_service', 'citizenshipCounties', 'help_cats'));
     }
@@ -101,8 +116,9 @@ class WelfareServiceController extends Controller
         $welfare->member_id = $request->member_id;
         $welfare->date_apply = $request->date_apply;
         $welfare->help_cat_id = $request->help_cat_id;
-        $welfare->remarks = $request->summary;
         $welfare->informer_name = $request->informer_name;
+        $welfare->remarks = $request->summary;
+        $welfare->zakat_years = json_encode($request->years);
         $welfare->last_edited_date = Carbon::today()->format('Y-m-d');
 
         $welfare->save();
@@ -111,9 +127,14 @@ class WelfareServiceController extends Controller
         $member->current_job = $request->current_job;
         $member->unemployed_reason = $request->unemployed_reason;
         $member->current_job_sector_id  = $request->job_sector_id;
+        $member->start_of_stay  = $request->start_of_stay;
         $member->home_status_id  = $request->home_status_id;
 
         $member->update();
+
+        $details = 'New Welfare service Registered';
+
+        addActivity($welfare->id, $details);
 
         return redirect()->route('welfare.index')->with('alert-success', 'Welfare help registered successfully');
     }
@@ -125,9 +146,9 @@ class WelfareServiceController extends Controller
      * @param  \App\Models\WelfareService  $welfareService
      * @return \Illuminate\Http\Response
      */
-    public function show(WelfareService $welfareService)
+    public function show(WelfareService $welfare)
     {
-        //
+        return view('welfare-member', compact('welfare'));
     }
 
     /**
@@ -136,9 +157,13 @@ class WelfareServiceController extends Controller
      * @param  \App\Models\WelfareService  $welfareService
      * @return \Illuminate\Http\Response
      */
-    public function edit(WelfareService $welfareService)
+    public function edit(WelfareService $welfare)
     {
-        //
+        $member_statuses = MemberStatuses::all();
+        $job_sectors = JobSectors::all();
+        $home_types = Homestatuses::all();
+        $help_categories = HelpCategory::all();
+        return view('edit-welfare', compact('welfare', 'member_statuses', 'help_categories', 'job_sectors', 'home_types'));
     }
 
     /**
@@ -148,9 +173,50 @@ class WelfareServiceController extends Controller
      * @param  \App\Models\WelfareService  $welfareService
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateWelfareServiceRequest $request, WelfareService $welfareService)
+    public function update(UpdateWelfareServiceRequest $request, WelfareService $welfare)
     {
-        //
+        if(isset($request->images)){
+            foreach ($request->images as $key => $image){
+                $name = $image->getClientOriginalName();
+                $oldFile = $request->oldImages[$key];
+                if(!empty($name)){
+                    $fileName = 'help-' . substr(md5(sha1(time())), 0, 10) . '-' . $name;
+                    $image->move(public_path('uploads'), $fileName);
+                    $welfare->{'attached_file' . ($key + 1)} = $fileName;
+                    if (File::exists(public_path('uploads/' . $oldFile))) {
+                        if ($oldFile != 'profile.png') {
+                            File::delete(public_path('uploads/' . $oldFile));
+                        }
+                    }
+                }else{
+                    $oldFile->{'attache_file' . ($key+1)} = $oldFile;
+                }
+            }
+        }
+
+        $welfare->member_id = $request->member_id;
+        $welfare->date_apply = $request->date_apply;
+        $welfare->help_cat_id = $request->help_cat_id;
+        $welfare->informer_name = $request->informer_name;
+        $welfare->remarks = $request->summary;
+        $welfare->zakat_years = json_encode($request->years);
+        $welfare->last_edited_date = Carbon::today()->format('Y-m-d');
+
+        $welfare->save();
+
+        $member = AllMember::where('id', $request->member_id)->first();
+        $member->current_job = $request->current_job;
+        $member->unemployed_reason = $request->unemployed_reason;
+        $member->current_job_sector_id  = $request->job_sector_id;
+        $member->start_of_stay  = $request->start_of_stay;
+        $member->home_status_id  = $request->home_status_id;
+
+        $member->update();
+
+        $details = 'Welfare service Updated';
+        addActivity($welfare->id, $details);
+
+        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help registered successfully');
     }
 
     /**

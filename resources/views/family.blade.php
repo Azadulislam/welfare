@@ -33,7 +33,9 @@
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <div class="form-check form-check-warning">
                                                 <label class="form-check-label" onclick="event.preventDefault()">
-                                                    <input type="checkbox" name="place_status" value="{{ $status['id'] }}" {{ oldCheckBox($status['id'], $member['member_status_ids']) }}
+                                                    <input type="checkbox" name="place_status"
+                                                           value="{{ $status['id'] }}"
+                                                           {{ oldCheckBox($status['id'], $member['member_status_ids']) }}
                                                            class="form-check-input rounded-0">
                                                     {{ $status['name'] }}
                                                 </label>
@@ -47,8 +49,8 @@
                             @foreach(array(
                                     array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value'=> $member['birth_date']),
                                     array('label'=>'Age', 'name'=>'age', 'value'=> age($member['birth_date'])),
-                                    array('label'=>'Nationality', 'name'=>'citizenship', 'value'=> $member->citizenshipCountry->name),
-                                    array('label'=>'Gender', 'name'=>'gender', 'value'=> $member['gender']),
+                                    array('label'=>'Nationality', 'name'=>'citizenship', 'value'=> getName($member->citizenship)),
+                                    array('label'=>'Gender', 'name'=>'gender', 'value'=> getName($member['gender'])),
                                     array('label'=>'Race', 'name'=>'race', 'value'=> $member['']),
                                     array('label'=>'Religion', 'name'=>'religion', 'value'=> $member['religion']),
                                     ) as $info)
@@ -66,14 +68,15 @@
                             <label class="col-sm-3 col-form-label">Marital Status</label>
                             <div class="col-sm-9">
                                 <div class="row">
-                                    @foreach($maritalStatus as $status)
+                                    @foreach($maritalStatus as $mrStatus)
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <div class="form-check form-check-warning">
                                                 <label class="form-check-label" onclick="event.preventDefault()">
-                                                    <input type="radio" name="place_status" value="{{ $status['id'] }}" @if(old('marital_status_id', $member->marital_status_id) == $status['id']) checked
+                                                    <input type="radio" name="place_status" value="{{ $mrStatus['id'] }}"
+                                                           @if(old('marital_status_id', $member->marital_status_id) == $mrStatus['id']) checked
                                                            @endif
-                                                    class="form-check-input rounded-0">
-                                                    {{ $status['name'] }}
+                                                           class="form-check-input rounded-0">
+                                                    {{ $mrStatus->name }}
                                                 </label>
                                             </div>
                                         </div>
@@ -115,53 +118,53 @@
                                         array('label'=>'Postcode', 'name'=>'home_postcode', 'required' => false, 'value'=> $member->home_postcode),
                                         array('label'=>'Town', 'name'=>'home_city', 'required' => false, 'value' => $member->home_city),
                                         array('label'=>'District', 'name'=>'home_district', 'required' => false, 'value' => $member->home_district),
-                                        array('label'=>'State', 'name'=>'home_state', 'required'=> false,'value' => $member->home_state),
+                                        array('label'=>'State', 'name'=>'home_state', 'required'=> false,'value' => getName($member->home_state)),
                                         ) as $data)
                                     <div class="col-md-3 col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label">
                                                 <span>{{$data['label']}}</span>
                                             </label>
-                                            <div class="">
-                                                {{$data['value']}}
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group row align-items-center">
-                                        <label class="col-sm-3 col-form-label">Current Home Status</label>
-                                        <div class="col-sm-9">
-                                            {{ $member->home_stuts }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                @foreach(array(
-                                        array('label'=>'Telephone (House)', 'required' => false, 'value'=> $member->telephone_one),
-                                        array('label'=>'Hand phone:', 'required' => false, 'value' => $member->mobile_phone),
-                                        array('label'=>'Email', 'required' => false, 'value' => $member->email),
-                                        array('label'=>'Date starts of Staying', 'required'=> false,'value' => $member->start_of_stay),
-                                        array('label'=>'Job', 'required'=> false,'value' => $member->job),
-                                        ) as $data)
-                                    <div class="col-md-3 col-6">
-                                        <div class="form-group">
-                                            <label class="form-label">
-                                                <span>{{$data['label']}}</span>
-                                            </label>
-                                            <div class="">
+                                            <div class="col-sm-9 py-2">
                                                 {{$data['value']}}
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
                             </div>
-                            @include('layouts.errors')
-                            <div class="row">
+                            <div class="col-12">
+                                <div class="form-group row align-items-center">
+                                    <label class="col-sm-3 col-form-label">Current Home Status</label>
+                                    <div class="col-sm-9">
+                                        {{ $member->home_stuts }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            @foreach(array(
+                                    array('label'=>'Telephone (House)', 'required' => false, 'value'=> $member->telephone_one),
+                                    array('label'=>'Hand phone:', 'required' => false, 'value' => $member->mobile_phone),
+                                    array('label'=>'Email', 'required' => false, 'value' => $member->email),
+                                    array('label'=>'Date starts of Staying', 'required'=> false,'value' => $member->start_of_stay),
+                                    array('label'=>'Job', 'required'=> false,'value' => $member->job),
+                                    ) as $data)
+                                <div class="col-md-3 col-6">
+                                    <div class="form-group">
+                                        <label class="form-label">
+                                            <span>{{$data['label']}}</span>
+                                        </label>
+                                        <div class="">
+                                            {{$data['value']}}
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        @include('layouts.errors')
+                        <div class="row">
                             @include('layouts.dependents')
-                            </div>
+                        </div>
                         </form>
                     </div>
                 </div>
@@ -174,8 +177,9 @@
         $('#customRelationShip').css('display', 'none');
         $('#custom_name').css('display', 'none');
         $('#telephone').prop('readonly', true);
-        function checkNew(){
-            if($('input[name="custom"]').prop("checked") == true){
+
+        function checkNew() {
+            if ($('input[name="custom"]').prop("checked") == true) {
                 $('#custom_name').css('display', 'block');
                 $('#exiting_name').css('display', 'none');
                 $('#telephone').prop('readonly', false);
@@ -183,7 +187,7 @@
                 $('select[name="member_id"]').children('option[value=""]').prop('selected', true);
                 $('input[name="telephone"]').val('');
                 $('input[name="ic_no"]').val('');
-            } else if($('input[name="custom"]').prop("checked") == false){
+            } else if ($('input[name="custom"]').prop("checked") == false) {
                 $('#telephone').prop('readonly', true);
                 $('#ic_no').prop('readonly', false);
                 $('#custom_name').css('display', 'none');
@@ -194,14 +198,14 @@
             }
         }
 
-        $('input[name="custom"]').click(function(){
+        $('input[name="custom"]').click(function () {
             checkNew();
         });
         $('[data-get="member"]').change(function (e) {
             var id = $(this).children(":selected").val();
             $.ajax({
                 type: "get",
-                url: "/member-data/"+id,
+                url: "/member-data/" + id,
                 cache: false,
                 dataType: "json",
                 headers: {

@@ -13,46 +13,48 @@
                         <div class="col-md-6 text-end d-flex justify-content-end align-items-center gap-2">
                             <a href=""
                                class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
-                                <img class="d-block w-[30px] max-w-[30px] leading-[30px]" src="{{ asset('./images/print.svg') }}">
+                                <img class="d-block w-[30px] max-w-[30px] leading-[30px]"
+                                     src="{{ asset('./images/print.svg') }}">
                             </a>
                         </div>
                     </div>
                     @include('layouts.errors')
                     <table id="example" class="table table-theme">
                         <thead>
-                            <tr>
-                                <th class="">Dead Person Name </th>
-                                <th class="">IC No.</th>
-                                <th class="">Address</th>
-                                <th class="">Date of Death</th>
-                                <th class="">Amount Paid</th>
-                                <th class="">Burial Contact Person</th>
-                                <th class=""><span class="sr-only">Action</span></th>
-                            </tr>
+                        <tr>
+                            <th class="">Dead Person Name</th>
+                            <th class="">IC No.</th>
+                            <th class="">Address</th>
+                            <th class="">Date of Death</th>
+                            <th class="">Amount Paid</th>
+                            <th class="">Burial Contact Person</th>
+                            <th class=""><span class="sr-only">Action</span></th>
+                        </tr>
                         </thead>
                         <tbody>
                         @foreach($deaths as $death)
-                            @php $member = $death->member; @endphp
-                        <tr>
-                            <td>{{ $member['name'] }}</td>
-                            <td>{{ $member['ic_no'] }}</td>
-                            <td>{{ $member['home_address1'] }}</td>
-                            <td>{{ memberStatus($member['member_status_ids']) }}</td>
-                            <td>{{ $death['service_cost'] }}</td>
-                            <td>{{ $death['burial_contact_person'] }}</td>
-                            <td>
-                                <div class="flex flex-row gap-2">
-                                    <a href="{{ route('member.edit', $member['id']) }}"
-                                       class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
-                                        <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
-                                    </a>
-                                    <a href="{{ route('burial.payment.create', $death->id) }}"
-                                       class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center d-block">
-                                        <img class="d-block w-[30px] max-w-[30px] leading-[30px]" src="{{ asset('./images/payment-icon1.svg') }}">
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                            @php $member = $death->member @endphp
+                            <tr>
+                                <td>{{ $member['name'] }}</td>
+                                <td>{{ $member['ic_no'] }}</td>
+                                <td>{{ $member['home_address1'] }}</td>
+                                <td>{{ memberStatus($member['member_status_ids']) }}</td>
+                                <td>{{ $death['service_cost'] }}</td>
+                                <td>{{ $death['burial_contact_person'] }}</td>
+                                <td>
+                                    <div class="flex flex-row gap-2">
+                                        <a href="{{ route('member.edit', $member['id']) }}"
+                                           class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
+                                            <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
+                                        </a>
+                                        <a href="{{ route('burial.payment.create', $death->id) }}"
+                                           class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center d-block">
+                                            <img class="d-block w-[30px] max-w-[30px] leading-[30px]"
+                                                 src="{{ asset('./images/payment-icon1.svg') }}">
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
                         @endforeach
                         </tbody>
                     </table>

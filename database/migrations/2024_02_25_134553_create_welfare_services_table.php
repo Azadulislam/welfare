@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('member_id')->unsigned();
             $table->bigInteger('help_cat_id')->unsigned();
-            $table->bigInteger('help_type_id')->unsigned()->nullable();
             $table->timestamp('date_apply')->nullable();
             $table->string('zakat_center', 55)->nullable();
+            $table->string('zakat_years', 255)->nullable();
             $table->text('remarks')->nullable();
             $table->string('attached_file1', 100)->nullable();
             $table->string('attached_file2', 100)->nullable();
@@ -30,7 +30,6 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('help_cat_id')->on('help_categories')->references('id')->onDelete('cascade');
-            $table->foreign('help_type_id')->on('help_types')->references('id')->onDelete('cascade');
             $table->foreign('member_id')->on('all_members')->references('id')->onDelete('cascade');
         });
     }

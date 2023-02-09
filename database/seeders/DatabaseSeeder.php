@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\AllMember;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -16,9 +17,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+//         User::factory(10)->create();
 
-//         \App\Models\User::factory()->create([
+//         User::factory()->create([
 //             'name' => 'Test User',
 //             'email' => 'test@example.com',
 //         ]);
@@ -26,7 +27,15 @@ class DatabaseSeeder extends Seeder
             ['name' => 'Test user', 'username' => 'user@gmail.com', 'password' => Hash::make('user')],
         );
 
-        \App\Models\User::insert($user);
+
+        $authorities = [
+            ['name' => 'Create User'],
+            ['name' => 'Dependant'],
+            ['name' => 'Single independent'],
+        ];
+        \App\Models\Authorities::insert($authorities);
+
+        User::insert($user);
         $this->call(StatusesSeeder::class);
         $this->call(AllMemberSeeder::class);
 
