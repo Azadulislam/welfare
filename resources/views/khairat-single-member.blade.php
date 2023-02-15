@@ -26,7 +26,7 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Name</label>
                                     <div class="col-sm-9">
-                                        {{ $member['name'] }}
+                                        {{ $member['name2'] }}
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                                     array('label'=>'IC','value' => $member->ic_no),
                                     array('label'=>'Job','value' => $member->job),
                                     array('label'=>'Guardian','value' => $member->jobjob),
-                                    array('label'=>'Asnaf Status','value' => $member->jobjob),
+                                    array('label'=>'Asnaf Status','value' => memberStatus($member['member_status_ids'])),
                                     ) as $data)
                                 <div class="col-md-6 col-12">
                                     <div class="form-group row">

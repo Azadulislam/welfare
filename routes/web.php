@@ -30,6 +30,7 @@ Route::get('member/family/{member:id}', [AllMemberController::class, 'family'])-
 //Route::get('/khairat-member/{member:id}', [AllMemberController::class, 'khairatMember'])->name('khairat.member');
 //Route::get('/death', [AllMemberController::class, 'deaths'])->name('death.index');
 Route::post('/search-member', [AllMemberController::class, 'searchMember']);
+Route::post('/search-member-unique', [AllMemberController::class, 'searchMemberUnique']);
 Route::get('/type/{category:id?}', [WelfareServiceController::class, 'typeByCategory']);
 Route::resource('/member', AllMemberController::class);
 Route::get('/member-data/{member:id?}', [AllMemberController::class, 'member'])->name('member.data');
@@ -44,10 +45,19 @@ Route::get('/welfare-payment/{welfare_service:id}/{category:id?}', [WelfareServi
 Route::put('/welfare-payment/{welfare_service:id}', [WelfareServiceController::class, 'paymentUpdate'])->name('payment.update');
 Route::get('/service/create/{id?}', [WelfareServiceController::class, 'welfareCreate'])->name('service.create');
 Route::get('/service/{category?}', [WelfareServiceController::class, 'welfare'])->name('service');
-Route::get('/welfare/import', [ActivityLogController::class, 'import'])->name('import.welfare');
-Route::post('/welfare/import', [ActivityLogController::class, 'importWelfare'])->name('import.welfare');
+
+Route::get('/welfare-export', [ActivityLogController::class, 'export'])->name('export.welfare');
+Route::post('/welfare-export', [ActivityLogController::class, 'exportWelfare'])->name('export.welfare');
+
+Route::get('/khairat-export', [ActivityLogController::class, 'exportTwo'])->name('export.khairat');
+Route::post('/khairat-export', [ActivityLogController::class, 'exportKhairat'])->name('export.khairat');
+
 Route::resource('/welfare', WelfareServiceController::class);
 Route::resource('/help-provided', HelpProvidedController::class);
 Route::resource('/audit', ActivityLogController::class);
 Route::get('/users', [HomeController::class, 'users'])->name('users');
 Route::get('/summary', [HomeController::class, 'summary'])->name('summary');
+Route::post('/summary', [HomeController::class, 'summaryData'])->name('summary');
+Route::get('/setting', [HomeController::class, 'setting'])->name('setting');
+Route::post('/setting/{user:id}', [HomeController::class, 'updateUser'])->name('user.update');
+Route::post('/password/{user:id}', [HomeController::class, 'changePassword'])->name('change.password');

@@ -206,6 +206,9 @@ class WelfareServiceController extends Controller
 
         $member = AllMember::where('id', $request->member_id)->first();
         $member->current_job = $request->current_job;
+        if($member->current_job == 'Job'){
+            $request->unemployed_reason = '';
+        }
         $member->unemployed_reason = $request->unemployed_reason;
         $member->current_job_sector_id  = $request->job_sector_id;
         $member->start_of_stay  = $request->start_of_stay;

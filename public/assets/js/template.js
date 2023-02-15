@@ -23,7 +23,8 @@
 
             } else {
                 //for other url
-                if (element.attr('href').split(" ").slice(-1).toString().replace(",", '') === current) {
+                let curl = element.attr('href').split(" ").slice(-1).toString().replace(",", '');
+                if (curl === current) {
                     element.parents('.nav-item').last().addClass('active');
                     if (element.parents('.sub-menu').length) {
                         element.closest('.collapse').addClass('show');
@@ -37,6 +38,7 @@
         }
 
         var current = location.href.split(" ").slice(-1).toString().replace(",", '');
+        console.log(current);
         $('.nav li a', sidebar).each(function () {
             var $this = $(this);
             addActiveClass($this);

@@ -29,7 +29,8 @@ class StoreWelfareServiceRequest extends FormRequest
             'member_id' => 'required',
             'years' => 'required|array',
             'current_job' => 'required',
-            'unemployed_reason' => Rule::requiredIf($this->current_job == 'Un Employed'),
+            'date_apply' => 'required',
+            'unemployed_reason' => 'nullable|required_if:current_job,Un Employed',
             'home_status_id' => 'required'
         ];
     }

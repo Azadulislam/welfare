@@ -19,7 +19,6 @@ return new class extends Migration
             $table->bigInteger('help_cat_id')->unsigned();
             $table->bigInteger('welfare_id')->unsigned();
             $table->bigInteger('help_type_id')->unsigned()->nullable();
-            $table->timestamp('date_apply')->nullable();
             $table->timestamp('approved_date')->nullable();
             $table->string('approved_by', 55)->nullable();
             $table->string('service_cost', 55)->nullable();

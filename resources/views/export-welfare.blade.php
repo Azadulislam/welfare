@@ -12,14 +12,24 @@
                             </div>
                         </div>
                         @include('layouts.errors')
-                        <form class="forms-sample" action="{{ route('import.welfare') }}" enctype="multipart/form-data"
+                        <form class="forms-sample" action="{{ route('export.welfare') }}" enctype="multipart/form-data"
                               method="post">
                             @csrf
                             <div class="form-group is-invalid">
-                                <div class="form-group row align-items-center required">
-                                    <label class="col-sm-3 col-form-label"><span>Select File</span></label>
-                                    <div class="col-sm-9">
-                                        <input type="file" name="importXl" class="dropify"/>
+                                <div class="form-group align-items-center required">
+                                    <label class="col-form-label"><span>Select Field</span></label>
+                                    <div class="row fields">
+                                        @for($i=0; $i < 8; $i++)
+                                            <div class="col-sm-3 col-md-2">
+                                                <select name="fields[]" class="form-control custom-select mb-3">
+                                                    <option value="">Select Column</option>
+                                                    @foreach($columns as $value)
+                                                        <option value="{{ $value['id'] }}"
+                                                                @if(old('fields[]') == $value['id']) selected @endif>{{ $value['label'] }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        @endfor
                                     </div>
                                     @error('importXl')
                                     <span class="invalid-feedback d-block" role="alert">
@@ -27,12 +37,6 @@
                                         </span>
                                     @enderror
                                 </div>
-
-                                @error('help_cat_id')
-                                <span class="invalid-feedback d-block" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
                             </div>
                             <button type="submit" class="btn btn-primary mr-2">Submit</button>
                         </form>
@@ -43,8 +47,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="{{ asset('assets/dropify/dist/js/dropify.js') }}"></script>
     <script>
-        $('.dropify').dropify();
+        let fields = ['Full Name', 'IC No', 'Member Type']
     </script>
 @endsection

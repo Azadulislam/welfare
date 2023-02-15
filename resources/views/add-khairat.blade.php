@@ -173,7 +173,7 @@
             placeholder: "Search Name/IC No",
             ajax: {
                 method: 'POST',
-                url: '/search-member',
+                url: '/search-member-unique',
                 data: function (params) {
                     console.log(params)
                     var query = {

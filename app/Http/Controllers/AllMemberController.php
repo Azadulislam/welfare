@@ -10,14 +10,17 @@ use App\Models\CitizenshipCountry;
 use App\Models\Genders;
 use App\Models\Homestatuses;
 use App\Models\JobSectors;
+use App\Models\KhairatMembers;
 use App\Models\MaritalStatuses;
 use App\Models\MemberStatuses;
 use App\Models\Races;
 use App\Models\Relations;
+use App\Models\RelationShip;
 use App\Models\Religions;
 use App\Models\State;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 
 class AllMemberController extends Controller
@@ -44,7 +47,19 @@ class AllMemberController extends Controller
     public function searchMember(Request $request)
     {
         $keyword = $request->search;
-        $members = AllMember::where('name', 'like', "%$keyword%")->orWhere('ic_no', 'like', "%$keyword%")->get();
+        $members = AllMember::where('name', 'like', "%$keyword%")->orWhere('ic_no', 'like', "%$keyword%")->orderBy('name', 'ASC')->get();
+        return $members;
+    }
+
+    public function searchMemberUnique(Request $request)
+    {
+        $keyword = $request->search;
+        $khairatIds = KhairatMembers::pluck('member_id')->toArray();
+        $members = AllMember::whereNotIn( "id", $khairatIds);
+        if(!empty($keyword)){
+            $members = $members->where('name', 'like', "%$keyword%")->orWhere('ic_no', 'like', "%$keyword%");
+        };
+        $members = $members->orderBy('name', 'ASC')->get();
         return $members;
     }
 
@@ -189,7 +204,8 @@ class AllMemberController extends Controller
     public function show($allMember)
     {
         $member = AllMember::where('id', '=', $allMember)->first();
-        return view('member', compact('member'));
+        $relationships = $member->relation_ships;
+        return view('member', compact('member', 'relationships'));
     }
 
     /**

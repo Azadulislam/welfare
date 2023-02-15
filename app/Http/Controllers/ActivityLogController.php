@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\KhairatExport;
+use App\Exports\WelfareExport;
 use App\Imports\WelfareImport;
 use App\Models\ActivityLog;
 use App\Http\Requests\StoreActivityLogRequest;
 use App\Http\Requests\UpdateActivityLogRequest;
+use App\Models\KhairatMembers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -88,12 +91,27 @@ class ActivityLogController extends Controller
         //
     }
 
-    public function import(){
-        return view('import-welfare');
+    public function export(){
+        $columns = fields();
+        return view('export-welfare', compact('columns'));
     }
-    public function importWelfare(Request $request){
-        Excel::import(new WelfareImport, $request->file('importXl'));
 
-        return redirect()->route('import.welfare')->with('alert-success', 'Imported successfully!');
+    public function exportTwo(){
+        $columns = khairatFields();
+        return view('export-welfare', compact('columns'));
+    }
+    public function exportWelfare(Request $request){
+        $fields = $request->fields;
+        $columns = array_filter(fields(), function ($item)use( $fields ){
+            return in_array($item['id'], $fields);
+        });
+        return Excel::download(new WelfareExport($columns), 'welfare.xlsx');
+    }
+    public function exportKhairat(Request $request){
+        $fields = $request->fields;
+        $columns = array_filter(khairatFields(), function ($item)use( $fields ){
+            return in_array($item['id'], $fields);
+        });
+        return Excel::download(new KhairatExport($columns), 'khairat.xlsx');
     }
 }

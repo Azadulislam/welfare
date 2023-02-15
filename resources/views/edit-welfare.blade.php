@@ -12,6 +12,15 @@
                                 <h4 class="card-title mb-3">Registration Of Welfare Help</h4>
                             </div>
                         </div>
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form class="forms-sample" action="{{ route('welfare.update', $welfare->id) }}" enctype="multipart/form-data" method="post">
                             @csrf
                             @method('PUT')
@@ -60,7 +69,7 @@
                                         array('label'=>'Marital Status', 'name'=>'marital_status', 'value' => $member->mobile_phone),
                                         array('label'=>'Jalan', 'name'=>'jalan', 'value' => $member->jalan),
                                         array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value' => $member->birth_date),
-                                        array('label'=>'Seksyen', 'name'=>'seksyen', 'value' => $member->seksyen),
+                                        array('label'=>'Section', 'name'=>'section', 'value' => $member->section),
                                         array('label'=>'Date Starts of Stay', 'name'=>'start_of_stay', 'value' => $member->start_of_stay)) as $info)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row align-items-center">
@@ -88,20 +97,20 @@
                                             $start = $cyear - 5;
                                             $end = ($cyear) + (5);
 
-                                            $dbyears = json_decode($welfare->zakat_years)
+                                            $dbyears = json_decode($welfare->zakat_years) ?? [];
                                         @endphp
                                         <div class="col-lg-2 col-md-3 col-6">
                                             <select class="form-control" name="years[]">
-                                                <option>Select Year</option>
+                                                <option value="">Select Year</option>
                                                 @for($start ; $start < $end; $start++)
                                                     <option value="{{ $start }}"
-                                                            @if(old('years[]', $dbyears[$i]) == $start) selected @endif>{{ $start }}</option>
+                                                            @if(old('years[]', isset($dbyears[$i])?$dbyears[$i]:'') == $start) selected @endif>{{ $start }}</option>
                                                 @endfor
                                             </select>
                                         </div>
                                     @endfor
                                 </div>
-                                @error('years')
+                                @error('years[]')
                                 <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

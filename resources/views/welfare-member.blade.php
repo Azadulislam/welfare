@@ -61,12 +61,12 @@
                                     array('label'=>'Postcode', 'value'=> $member->home_postcode),
                                     array('label'=>'District', 'value' => $member->home_district),
                                     array('label'=>'State','value' => $member->home_state->name),
-                                    array('label'=>'Benificiary','value' => $member->home_state),
+                                    array('label'=>'Beneficiary','value' => $member->beneficiary_ic),
                                     array('label'=>'Birth Date','value' => $member->bitth_date),
                                     array('label'=>'IC','value' => $member->ic_no),
-                                    array('label'=>'Job','value' => $member->job),
-                                    array('label'=>'Guardian','value' => $member->jobjob),
-                                    array('label'=>'Asnaf Status','value' => $member->jobjob),
+                                    array('label'=>'Job','value' => $member->current_job),
+                                    array('label'=>'Guardian','value' => guardian($member->relation_ships)),
+                                    array('label'=>'Asnaf Status','value' => memberStatus($member['member_status_ids'])),
                                     ) as $data)
                                 <div class="col-md-6 col-12">
                                     <div class="form-group row">

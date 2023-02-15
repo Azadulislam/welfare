@@ -35,6 +35,16 @@ class DatabaseSeeder extends Seeder
         ];
         \App\Models\Authorities::insert($authorities);
 
+        $auth = [
+            ['title' => 'All Authorities'],
+        ];
+        \App\Models\Authorities::insert($auth);
+
+        $users_auth = [
+            ['user_id' => '1', 'authority_id' => '1'],
+        ];
+
+        \App\Models\UserAuthorities::insert($users_auth);
         User::insert($user);
         $this->call(StatusesSeeder::class);
         $this->call(AllMemberSeeder::class);

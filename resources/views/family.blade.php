@@ -174,6 +174,38 @@
 @endsection
 @section('script')
     <script>
+        let keywordEl = $('[name="related_to_id"]');
+        $eventSelect = keywordEl.select2({
+            placeholder: "Search Name",
+            ajax: {
+                method: 'POST',
+                url: '/search-member',
+                data: function (params) {
+                    console.log(params)
+                    var query = {
+                        search: params.term,
+                        type: 'public'
+                    }
+                    return query;
+                },
+                processResults: function (data) {
+                    console.log(data)
+                    let items = [];
+                    $(data).each((index, item) => {
+                        items.push({id: item.id, text: item.name})
+                    })
+                    return {
+                        results: items,
+                    };
+                }
+            },
+            change: (e) => {
+                console.log(e)
+            }
+
+        });
+
+
         $('#customRelationShip').css('display', 'none');
         $('#custom_name').css('display', 'none');
         $('#telephone').prop('readonly', true);

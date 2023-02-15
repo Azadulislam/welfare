@@ -47,4 +47,8 @@ class AllMember extends Model
     public function marital_status(){
         return $this->hasOne(MaritalStatuses::class, 'id', 'marital_status_id');
     }
+
+    public function relations(){
+        return $this->hasManyThrough(Relations::class, RelationShip::class, 'member_id', 'id','id', 'relation_id');
+    }
 }

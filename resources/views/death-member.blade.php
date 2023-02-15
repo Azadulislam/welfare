@@ -71,7 +71,7 @@
                                     array('label'=>'Date of Death','value' => $member->jobjob),
                                     array('label'=>'Wakil Pengurus Jenazah','value' => $death->buiral_contact_person),
                                     array('label'=>'No. Tel. Wakil Pengurus Jenazah','value' => $member->buiral_contact_person_tel),
-                                    array('label'=>'Sebab Kematian','value' => $member->buiral_contact_person_tel),
+                                    array('label'=>'Sebab Kematian','value' => $member->cause_of_death),
                                     ) as $data)
                                 <div class="col-md-6 col-12">
                                     <div class="form-group row">

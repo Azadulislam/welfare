@@ -15,6 +15,7 @@ class StatusesSeeder extends Seeder
     public function run()
     {
         $relations = array(
+            ['name' => 'Guardian'],
             ['name' => 'Husband'],
             ['name' => 'Wife'],
             ['name' => 'Sons'],

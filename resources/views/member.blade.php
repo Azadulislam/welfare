@@ -63,8 +63,8 @@
                                     array('label'=>'Birth Date','value' => $member->bitth_date),
                                     array('label'=>'IC','value' => $member->ic_no),
                                     array('label'=>'Job','value' => $member->job),
-                                    array('label'=>'Guardian','value' => $member->jobjob),
-                                    array('label'=>'Asnaf Status','value' => $member->jobjob),
+                                    array('label'=>'Guardian','value' => guardian($relationships)),
+                                    array('label'=>'Asnaf Status','value' => memberStatus($member['member_status_ids'])),
                                     array('label'=>'Beneficiary Name','value' => $member->beneficiary_name),
                                     array('label'=>'Beneficiary IC','value' => $member->beneficiary_ic),
                                     ) as $data)
