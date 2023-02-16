@@ -21997,6 +21997,7 @@ h2 {
     font-size: 0.875rem;
     line-height: 1;
     vertical-align: middle;
+    margin-left: 8px;
 }
 
 .sidebar .nav .nav-item .nav-link .badge {
@@ -22522,6 +22523,10 @@ h2 {
         padding-right: .5rem;
         text-align: center;
         position: static;
+    }
+
+    .sidebar-icon-only .sidebar .nav:not(.sub-menu) .nav-item .nav-link {
+        justify-content: center;
     }
 
     .sidebar-icon-only .sidebar .nav .nav-item .nav-link .menu-title,
