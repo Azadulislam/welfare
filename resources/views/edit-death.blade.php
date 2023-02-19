@@ -34,14 +34,14 @@
                                         array('label'=>'Full Name', 'name'=>'full_name', 'value' => $member->name),
                                         array('label'=>'IC No', 'name'=>'ic_no', 'value' => $member->ic_no),
                                         array('label'=>'Address Line 1', 'name'=>'home_address1', 'value' => $member->home_address1),
-                                        array('label'=>'Seksyen', 'name'=>'fafdsaf', 'value' => $member->name),
+                                        array('label'=>'Seksyen', 'name'=>'fafdsaf', 'value' => $member->home_section),
                                         array('label'=>'City', 'name'=>'home_city', 'value' => $member->home_city),
                                         array('label'=>'District', 'name'=>'home_district', 'value' => $member->home_distirct),
-                                        array('label'=>'State', 'name'=>'home_state', 'value' => $member->home_state->name),
+                                        array('label'=>'State', 'name'=>'home_state', 'value' => getName($member->home_state)),
                                         array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value' => $member->birth_date),
                                         array('label'=>'Home Telephone', 'name'=>'telephone', 'value' => $member->telephone_one),
                                         array('label'=>'Other Name', 'name'=>'name2', 'value' => $member->name2),
-                                        array('label'=>'Martial Status', 'name'=>'marital_status', 'value' => $member->marital_status->name),
+                                        array('label'=>'Martial Status', 'name'=>'marital_status', 'value' => getName($member->marital_status)),
                                         ) as $info)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row align-items-center">

@@ -53,7 +53,7 @@
                                                 <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
                                             </a>
                                             <form class="d-inline-block mb-0" method="post"
-                                                  action="{{ route('khairat.destroy', $member->member['id']) }}">
+                                                  action="{{ route('khairat.destroy', $member['id']) }}">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"

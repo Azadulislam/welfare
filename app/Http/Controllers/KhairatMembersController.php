@@ -95,14 +95,14 @@ class KhairatMembersController extends Controller
      * @param  \App\Models\KhairatMembers  $khairatMembers
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function update(UpdateKhairatMembersRequest $request, KhairatMembers $khairat_member)
+    public function update(UpdateKhairatMembersRequest $request, KhairatMembers $khairat)
     {
-        $khairat_member->member_start_date = $request->member_start_date;
-        $khairat_member->approval_date = $request->approval_date;
-        $khairat_member->update();
+        $khairat->member_start_date = $request->member_start_date;
+        $khairat->approval_date = $request->approval_date;
+        $khairat->update();
 
         $details = 'One khairat member updated';
-        addActivity($khairat_member->id, $details);
+        addActivity($khairat->id, $details);
 
         return redirect()->route('member.index')->with('alert-success', 'Khairat member updated successfully');
     }
@@ -113,11 +113,11 @@ class KhairatMembersController extends Controller
      * @param  \App\Models\KhairatMembers  $khairatMembers
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function destroy(KhairatMembers $khairat_member)
+    public function destroy(KhairatMembers $khairat)
     {
         $details = 'One khairat member deleted';
-        addActivity($khairat_member->id, $details);
-        $khairat_member->delete();
-        return redirect()->route('khairat-member.index')->with('alert-warning', 'Khairat member deleted successfully');
+        addActivity($khairat->id, $details);
+        $khairat->delete();
+        return redirect()->route('khairat.index')->with('alert-warning', 'Khairat member deleted successfully');
     }
 }

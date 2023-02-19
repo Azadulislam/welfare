@@ -36,10 +36,10 @@
                                         array('label'=>'Seksyen', 'name'=>'fafdsaf', 'value' => $member->name),
                                         array('label'=>'City', 'name'=>'home_city', 'value' => $member->home_city),
                                         array('label'=>'District', 'name'=>'home_district', 'value' => $member->home_distirct),
-                                        array('label'=>'State', 'name'=>'home_state', 'value' => $member->home_state->name),
+                                        array('label'=>'State', 'name'=>'home_state', 'value' => getName($member->home_state)),
                                         array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value' => $member->birth_date),
                                         array('label'=>'Home Telephone', 'name'=>'telephone', 'value' => $member->telephone_one),
-                                        array('label'=>'Martial Status', 'name'=>'marital_status', 'value' => $member->marital_status->name),
+                                        array('label'=>'Martial Status', 'name'=>'marital_status', 'value' => getName($member->marital_status)),
                                         ) as $info)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row align-items-center">

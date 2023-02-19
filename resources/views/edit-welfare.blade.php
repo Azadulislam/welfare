@@ -49,16 +49,10 @@
                                 @enderror
                             </div>
                             <input type="hidden" name="member_id" value="{{ old('member_id', $welfare->member_id) }}">
-                            <div class="row d-none">
-                                <div class="form-group col-lg-12 col-md-12 col-12 required">
-                                    <label for=""><span>Select Member</span></label>
-                                    <select class="form-control" id="search_key">
-                                    </select>
-                                    @error('member_id')
-                                    <span class="invalid-feedback d-block" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                            <div class="row">
+                                    <label class="col-lg-2 col-md-3 col-8 col-form-label" for=""><span>Select Member</span></label>
+                                <div class="form-group col-lg-10 col-md-9 col-8">
+                                    <input type="text" class="form-control" value="{{ $member->name }}" readonly/>
                                 </div>
                             </div>
                             <div class="row">

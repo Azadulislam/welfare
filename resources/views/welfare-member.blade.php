@@ -42,7 +42,7 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Telephone</label>
                                     <div class="col-sm-9">
-                                        {{ $member['telephone_one'] }}
+                                        {{ $member['telephone2'] }}
                                     </div>
                                 </div>
                             </div>

@@ -256,7 +256,7 @@
                             <div class="row mt-3">
                                 @foreach(array(
                                         array('label'=>'Telephone (Home)', 'name'=>'telephone_one', 'type' => 'text', 'required' => false),
-                                        array('label'=>'Telephone (Hand phone)', 'name'=>'mobile_phone', 'type' => 'text', 'required' => true),
+                                        array('label'=>'Telephone (Hand phone)', 'name'=>'mobile_phone', 'type' => 'text', 'required' => false),
                                         array('label'=>'Email', 'name'=>'email', 'type' => 'email', 'required' => false),
                                         array('label'=>'Beneficiary Name', 'name'=>'beneficiary_name', 'type' => 'text', 'required' => false),
                                         array('label'=>'Beneficiary IC Num', 'name'=>'beneficiary_ic', 'type' => 'text', 'required' => false),

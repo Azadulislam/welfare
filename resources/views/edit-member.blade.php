@@ -264,7 +264,7 @@
                             <div class="row mt-3">
                                 @foreach(array(
                                         array('label'=>'Telephone (Home)', 'name'=>'telephone_one', 'type' => 'text', 'required' => false, 'value' => $member->telephone_one),
-                                        array('label'=>'Telephone (Hand phone)', 'name'=>'mobile_phone', 'type' => 'text', 'required' => true, 'value' => $member->mobile_phone),
+                                        array('label'=>'Telephone (Hand phone)', 'name'=>'mobile_phone', 'type' => 'text', 'required' => false, 'value' => $member->mobile_phone),
                                         array('label'=>'Email', 'name'=>'email', 'type' => 'email', 'required' => false, 'value' => $member->email),
                                         ) as $data)
                                     <div class="col-md-3 col-6">

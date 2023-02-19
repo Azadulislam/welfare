@@ -110,16 +110,17 @@
                     @yield('content')
                 </div>
                 <!-- content-wrapper ends -->
-                <!-- partial:partials/_footer.html -->
-                <footer class="footer">
-                    <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                        <span class="text-dark text-center text-sm-left d-block d-sm-inline-block"><i class="mdi mdi-copyright"></i> Copyright Masjid Jamek Sultan Abdul Aziz Petaling Jaya 2022</span>
-                    </div>
-                </footer>
+
                 <!-- partial -->
             </div>
             <!-- main-panel ends -->
         </div>
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+            <div class="d-sm-flex justify-content-center justify-content-sm-between">
+                <span class="text-dark text-center text-sm-left d-block d-sm-inline-block"><i class="mdi mdi-copyright"></i> Copyright Masjid Jamek Sultan Abdul Aziz Petaling Jaya 2022</span>
+            </div>
+        </footer>
         <!-- page-body-wrapper ends -->
     </div>
     <!-- End plugin js for this page-->

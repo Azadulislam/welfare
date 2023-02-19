@@ -29,7 +29,7 @@ class StoreAllMemberRequest extends FormRequest
             'citizenship' => 'required',
             'gender' => 'nullable',
             'home_address1' => 'required',
-            'mobile_phone' => 'required',
+            'mobile_phone' => 'nullable',
             'telephone_one' => 'nullable',
             'marital_status_id' => 'required',
         ];

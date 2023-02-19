@@ -28,7 +28,7 @@
                                         array('label'=>'Marital Status', 'name'=>'marital_status', 'value' => $member->marital_status->name),
                                         array('label'=>'Jalan', 'name'=>'jalan', 'value' => ''),
                                         array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value' => $member->birth_date),
-                                        array('label'=>'Seksyen', 'name'=>'seksyen', 'value' => ''),
+                                        array('label'=>'Seksyen', 'name'=>'seksyen', 'value' => $member->ic_section),
                                         array('label'=>'Date Starts of Stay', 'name'=>'start_of_stay', 'value' => $member->start_of_stay)
                                         ) as $info)
                                     <div class="col-md-6 col-12">

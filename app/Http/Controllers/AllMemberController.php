@@ -110,7 +110,7 @@ class AllMemberController extends Controller
         $memberStatus = MemberStatuses::all();
         $maritalStatus = MaritalStatuses::all();
         $members = AllMember::where('id', '<>', $member->id)->get();
-        $relations = Relations::all();// RelationShip::where('member_id', '=', $member->id)->orWhere('related_to_id', '=', $member->id)->get();
+        $relations = Relations::orderBy('name', 'ASC')->get();// RelationShip::where('member_id', '=', $member->id)->orWhere('related_to_id', '=', $member->id)->get();
         $relationships = $member->relation_ships;
         return view('family', compact('member', 'relationships', 'memberStatus', 'maritalStatus', 'members', 'relations'));
     }
@@ -276,7 +276,7 @@ class AllMemberController extends Controller
         $allMember->birth_date = $request->birth_date;
 //        $allMember->age = $request->age;
         $allMember->citizenship_id = $request->citizenship;
-        $allMember->gender = $request->gender;
+        $allMember->gender_id = $request->gender;
         $allMember->race_id = $request->race_id;
         $allMember->religion_id = $request->religion_id;
         $allMember->mobile_phone = $request->mobile_phone;
@@ -287,7 +287,7 @@ class AllMemberController extends Controller
         $allMember->ic_city = $request->ic_city;
         $allMember->ic_postcode = $request->ic_postcode;
         $allMember->ic_district = $request->ic_district;
-        $allMember->ic_state = $request->ic_state;
+        $allMember->ic_state_id = $request->ic_state;
         $allMember->ic_section = $request->ic_section;
 
         $allMember->home_address1 = $request->home_address1;
