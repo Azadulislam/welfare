@@ -7,7 +7,9 @@ use App\Models\AllMember;
 use App\Http\Requests\StoreAllMemberRequest;
 use App\Http\Requests\UpdateAllMemberRequest;
 use App\Models\CitizenshipCountry;
+use App\Models\Death;
 use App\Models\Genders;
+use App\Models\HelpProvided;
 use App\Models\Homestatuses;
 use App\Models\JobSectors;
 use App\Models\KhairatMembers;
@@ -18,6 +20,7 @@ use App\Models\Relations;
 use App\Models\RelationShip;
 use App\Models\Religions;
 use App\Models\State;
+use App\Models\WelfareService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -322,11 +325,37 @@ class AllMemberController extends Controller
      */
     public function destroy($allMember)
     {
+        $khairats = KhairatMembers::where('member_id', '=', $allMember)->get();
+        $deaths = Death::where('all_member_id', '=', $allMember)->get();
+        $welfares = WelfareService::where('member_id', '=', $allMember)->get();
         $member = AllMember::where('id', '=', $allMember)->first();
-        $member->delete();
+        $relationships = RelationShip::where('member_id', '=', $allMember)->get();
+        $helpProvideds = HelpProvided::where('member_id', '=', $allMember)->get();
 
-        $details = 'One member Deleted';
-        addActivity($member->id, $details);
+
+        if($member){
+            $details = 'One member Deleted';
+            addActivity($member->id, $details);
+            $member->delete();
+        }else{
+            return redirect()->route('member.index')->with('alert-warning', 'Member Not found');
+        }
+        foreach ($deaths as $death){
+            $death->delete();
+        }
+        foreach ($khairats as $khairat){
+            $khairat->delete();
+        }
+        foreach ($welfares as $welfare){
+            $welfare->delete();
+        }
+        foreach ($relationships as $relationship){
+            $relationship->delete();
+        }
+        foreach ($helpProvideds as $helpProvided){
+            $helpProvided->delete();
+        }
+
 
         return redirect()->route('member.index')->with('alert-warning', 'Member Deleted successfully');
     }

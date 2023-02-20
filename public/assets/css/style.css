@@ -22701,3 +22701,8 @@ h2 {
         display: block;
     }
 }
+
+select{
+    -webkit-appearance: listbox !important;
+    -moz-appearance: listbox !important;
+}

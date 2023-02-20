@@ -37,7 +37,7 @@ return new class extends Migration
             $table->bigInteger('citizenship_id')->unsigned()->nullable();;
             $table->string('telephone_one', 255)->nullable();
             $table->string('telephone2', 255)->nullable();
-            $table->string('mobile_phone', 255);
+            $table->string('mobile_phone', 255)->nullable();
             $table->string('email', 255)->nullable();
             $table->string('name2', 255)->nullable();
             $table->date('birth_date')->nullable();;
