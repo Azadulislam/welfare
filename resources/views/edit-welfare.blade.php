@@ -83,7 +83,7 @@
                                 @endforeach
                             </div>
                             <div class="form-group">
-                                <label>Pernah menerima bantuan dari institusi zakat</label>
+                                <label>Years Received Zakat Previously</label>
                                 <div class="row">
                                     @for($i=0;$i<5;$i++)
                                         @php

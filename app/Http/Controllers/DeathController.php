@@ -199,7 +199,7 @@ class DeathController extends Controller
     {
         $request->validate([
             'pay_date' => 'required',
-            'service_cost' => 'required|decimal:2',
+            'service_cost' => 'required',
 
         ]);
         $death->pay_date = $request->pay_date;

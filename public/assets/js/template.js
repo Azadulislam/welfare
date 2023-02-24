@@ -61,3 +61,7 @@
         $(".form-check label,.form-radio label").append('<i class="input-helper"></i>');
     });
 })(jQuery);
+
+function confirmDelete() {
+    if(confirm('Are you sure you want to delete')){ return true}
+}

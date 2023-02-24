@@ -26,7 +26,7 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Name</label>
                                     <div class="col-sm-9">
-                                        {{ $member['name'] }}
+                                        {{ $member['name2'] }}
                                     </div>
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="form-group row align-items-center">
                                     <label class="col-sm-3 col-form-label">Other Telephone</label>
                                     <div class="col-sm-9">
-                                        {{ $member['telephone_one'] }}
+                                        {{ $member['telephone2'] }}
                                     </div>
                                 </div>
                             </div>
@@ -88,10 +88,10 @@
                         <div class="row">
                             @foreach(
                                 array(
-                                    array('src' => $member->attache_file1),
-                                    array('src' => $member->attache_file2),
-                                    array('src' => $member->attache_file3),
-                                    array('src' => $member->attache_file4)
+                                    array('src' => $death->attached_file1),
+                                    array('src' => $death->attached_file2),
+                                    array('src' => $death->attached_file3),
+                                    array('src' => $death->attached_file4)
                                 )
                                  as $src)
                                 <div class="form-group mb-3 col-md-3 col-sm-4 col-6">

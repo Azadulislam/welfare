@@ -33,7 +33,7 @@
                                 @foreach(array(
                                         array('label'=>'Full Name', 'name'=>'full_name', 'value' => $member->name),
                                         array('label'=>'Address Line 1', 'name'=>'home_address1', 'value' => $member->home_address1),
-                                        array('label'=>'Seksyen', 'name'=>'fafdsaf', 'value' => $member->name),
+                                        array('label'=>'Seksyen', 'name'=>'fafdsaf', 'value' => $member->section),
                                         array('label'=>'City', 'name'=>'home_city', 'value' => $member->home_city),
                                         array('label'=>'District', 'name'=>'home_district', 'value' => $member->home_distirct),
                                         array('label'=>'State', 'name'=>'home_state', 'value' => getName($member->home_state)),

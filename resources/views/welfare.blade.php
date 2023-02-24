@@ -11,7 +11,7 @@
                             <p class="card-title">Lis Of @if(!isset($category)) All Category @else {{ $category }}s @endif</p>
                         </div>
                         <div class="col-md-6 text-end d-flex justify-content-end align-items-center gap-2">
-                            <a href="{{ route('service.create', $category_id ?? '') }}"
+                            <a href="{{ route('service.create', $category_id ?? '') }}" title="Add Khairat"
                                class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <i class="fa-solid fa-plus me-2"></i>
                                 @if(!isset($category))
@@ -34,7 +34,7 @@
                                          src="{{ asset('./images/others.svg') }}">
                                 @endif
                             </a>
-                            <a href="" onclick="printDiv('printContent')"
+                            <a href="" onclick="printDiv('printContent')" title="Print Table"
                                class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <img class="d-block w-[30px] max-w-[30px] leading-[30px]"
                                      src="{{ asset('./images/print.svg') }}">
@@ -63,16 +63,16 @@
                                     <td>{{ memberStatus($all_member['member_status_ids']) }}</td>
                                     <td class="action">
                                         <div class="flex flex-row gap-2">
-                                            <a href="{{ route('welfare.payment', $member['id']) }}"
+                                            <a href="{{ route('welfare.payment', $member['id']) }}" title="Update Payment for welfare"
                                                class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <img class="d-block w-[30px] max-w-[30px] leading-[30px]"
                                                      src="{{ asset('./images/payment-icon.svg') }}">
                                             </a>
-                                            <a href="{{ route('welfare.show', $member['id']) }}"
+                                            <a href="{{ route('welfare.show', $member['id']) }}" title="Welfare Details"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-eye w-[30px]  text-center leading-[30px]"></i>
                                             </a>
-                                            <a href="{{ route('welfare.edit', $member['id']) }}"
+                                            <a href="{{ route('welfare.edit', $member['id']) }}" title="Edit Welfare"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
                                             </a>
@@ -80,7 +80,7 @@
                                                   action="{{ route('death.destroy', $member['id']) }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="submit" onclick="confirmDelete()" title="Delete Welfare"
                                                         class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                     <i class="fa-solid fa-trash-can w-[30px] text-center leading-[30px]"></i>
                                                 </button>

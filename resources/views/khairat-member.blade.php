@@ -10,12 +10,12 @@
                             <p class="card-title">Khairat Membership</p>
                         </div>
                         <div class="col-md-6 text-end d-flex justify-content-end align-items-center gap-2">
-                            <a href="{{ route('khairat.create') }}"
+                            <a href="{{ route('khairat.create') }}" title="Add Khairat"
                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <i class="fa-solid fa-plus"></i>
                                 <img src="{{ asset('./images/add-user.svg') }}">
                             </a>
-                            <button href="javascript:" onclick="printDiv('printContent')"
+                            <button href="javascript:" onclick="printDiv('printContent')" title="Print Table"
                                     class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <img src="{{ asset('./images/print.svg') }}">
                             </button>
@@ -44,11 +44,11 @@
                                     <td>{{ $member->member['home_address1'] }}</td>
                                     <td class="action">
                                         <div class="flex flex-row gap-2">
-                                            <a href="{{ route('khairat.show', $member->id) }}"
+                                            <a href="{{ route('khairat.show', $member->id) }}" title="See Khairat Details"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-eye w-[30px]  text-center leading-[30px]"></i>
                                             </a>
-                                            <a href="{{ route('khairat.edit', $member->id) }}"
+                                            <a href="{{ route('khairat.edit', $member->id) }}" title="Edit Khairat"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
                                             </a>
@@ -56,7 +56,7 @@
                                                   action="{{ route('khairat.destroy', $member['id']) }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="submit" onclick="confirmDelete()" title="Delete Khairat Member"
                                                         class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                     <i class="fa-solid fa-trash-can w-[30px] text-center leading-[30px]"></i>
                                                 </button>

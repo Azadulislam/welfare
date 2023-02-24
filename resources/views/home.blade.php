@@ -44,16 +44,16 @@
                                     <td>2011-04-25</td>
                                     <td class="action">
                                         <div class="flex flex-row gap-2 hide-print">
-                                            <a href="{{ route('member.family', $member['id']) }}"
+                                            <a href="{{ route('member.family', $member['id']) }}" title="Manage Dependents"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <img class="d-block w-[30px] max-w-[30px] leading-[30px]"
                                                      src="{{ asset('./images/add-user.svg') }}">
                                             </a>
-                                            <a href="{{ route('member.show', $member['id']) }}"
+                                            <a href="{{ route('member.show', $member['id']) }}" title="View member details"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-eye w-[30px]  text-center leading-[30px]"></i>
                                             </a>
-                                            <a href="{{ route('member.edit', $member['id']) }}"
+                                            <a href="{{ route('member.edit', $member['id']) }}" title="Edit member"
                                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                 <i class="fa-solid fa-pencil w-[30px] text-center leading-[30px]"></i>
                                             </a>
@@ -61,7 +61,7 @@
                                                   action="{{ route('member.destroy', $member['id']) }}">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="submit" onclick="confirmDelete()" title="Delete Member"
                                                         class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                                     <i class="fa-solid fa-trash-can w-[30px] text-center leading-[30px]"></i>
                                                 </button>

@@ -111,7 +111,7 @@
                     <form class="d-inline-block" method="post" action="{{ route('relation.destroy', $relation['id']) }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="btn text-white btn-danger"><i class="mdi mdi-delete"></i></button>
+                        <button type="submit" onclick="confirmDelete()" class="btn text-white btn-danger"><i class="mdi mdi-delete"></i></button>
                     </form>
                 </div>
             </div>

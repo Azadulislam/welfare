@@ -25,7 +25,7 @@
                                         array('label'=>'Applicant Name', 'name'=>'name', 'value' => $member->name),
                                         array('label'=>'Telephone (Home)', 'name'=>'telephone_one', 'value' => $member->telephone_one),
                                         array('label'=>'IC No', 'name'=>'ic_no', 'value' => $member->ic_no),
-                                        array('label'=>'Marital Status', 'name'=>'marital_status', 'value' => $member->marital_status->name),
+                                        array('label'=>'Marital Status', 'name'=>'marital_status', 'value' => getName($member->marital_status)),
                                         array('label'=>'Jalan', 'name'=>'jalan', 'value' => ''),
                                         array('label'=>'Date Of Birth', 'name'=>'birth_date', 'value' => $member->birth_date),
                                         array('label'=>'Seksyen', 'name'=>'seksyen', 'value' => $member->ic_section),

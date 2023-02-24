@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <div class="row align-items-center">
                             <div class="col-md-6">
-                                <h4 class="card-title mb-3">Registration Death Khairat Member</h4>
+                                <h4 class="card-title mb-3">Registration Khairat Member</h4>
                             </div>
                         </div>
                         <form class="forms-sample" action="{{ route('khairat.store') }}" method="post"
