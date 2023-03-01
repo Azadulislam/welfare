@@ -29,7 +29,7 @@
                             <span>{{ $relation['relatedTo']['ic_no'] }}</span>
                         </div>
                         <div class="col-md-3 col-12">
-                            <span>{{ ($relation['relatedTo']['telephone_one']) }}</span>
+                            <span>{{ ($relation['relatedTo']['mobile_phone']) }}</span>
                         </div>
                         <div class="col-md-3 col-12">
                             <span>{{ $relation['relationship']['name'] }}</span>

@@ -10,12 +10,12 @@
                             <p class="card-title">Database</p>
                         </div>
                         <div class="col-md-6 text-end d-flex justify-content-end align-items-center gap-2">
-                            <a href="{{ route('member.create') }}"
+                            <a href="{{ route('member.create') }}" title="Add Member"
                                class="text-decoration-none text-dark bg-theme border-0 py-2 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <i class="fa-solid fa-plus"></i>
                                 <img src="{{ asset('./images/add-user.svg') }}">
                             </a>
-                            <button href="javascript:" onclick="printDiv('printContent')"
+                            <button href="javascript:" onclick="printDiv('printContent')" title="Print data"
                                class="text-decoration-none text-dark bg-theme border-0 py-1 px-2 rounded text-xl flex flex-row gap-1 align-items-center">
                                 <img src="{{ asset('./images/print.svg') }}">
                             </button>

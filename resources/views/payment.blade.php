@@ -53,7 +53,7 @@
                                         array('label'=>'Date', 'name'=>'date', 'type' => 'date', 'required' => true),
                                         array('label'=>'Help Category', 'name'=>'help_cat_id', 'type' => 'select', 'required'=> true, 'values' => $help_cats, 'default' => 'Select Country'),
                                         array('label'=>'Total RM', 'name'=>'service_cost', 'type' => 'text', 'required' => true),
-                                        array('label'=>'Type Of Help', 'name'=>'help_type_id', 'type' => 'select', 'required' => false, 'default' => 'Select Category First', 'values' => [])
+                                        array('label'=>'Type Of Help', 'name'=>'help_type_id', 'type' => 'select', 'required' => true, 'default' => 'Select Category First', 'values' => [])
                                         ) as $data)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row @if($data['required']) required @endif">
@@ -101,7 +101,7 @@
                                         array('label'=>'Authorized By', 'name'=>'authorized_by', 'type' => 'text', 'required' => true),
                                         array('label'=>'Authorized Date', 'name'=>'authorized_date', 'type' => 'date', 'required'=> true),
                                         array('label'=>'Name Of Help Recipient', 'name'=>'payout_received_by', 'type' => 'text', 'required' => true),
-                                        array('label'=>'Date Received', 'name'=>'date_payout', 'type' => 'date', 'required' => false)
+                                        array('label'=>'Date Received', 'name'=>'date_payout', 'type' => 'date', 'required' => true)
                                         ) as $data)
                                     <div class="col-md-6 col-12">
                                         <div class="form-group row @if($data['required']) required @endif">
@@ -134,9 +134,12 @@
                             </div>
 
                             <div class="row">
+                                <div class="col-12">
+                                    <small class="text-danger">Must Add at least one image</small>
+                                </div>
                                 @for($i=0;$i< 4; $i++)
-                                    <div class="form-group mb-3 col-md-3 col-sm-4 col-6">
-                                        <label for="exampleInputCity1">Image file</label>
+                                    <div class="form-group mb-3 col-md-3 col-sm-4 col-6 required">
+                                        <label for="exampleInputCity1"><span>Image file</span></label>
                                         <input type="file" name="images[]" class="dropify" data-height="250"/>
                                     </div>
                                 @endfor

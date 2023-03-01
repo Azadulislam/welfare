@@ -34,6 +34,8 @@ return new class extends Migration
             $table->string('attached_file5', 100)->nullable();
             $table->timestamp('last_edited_date');
             $table->timestamps();
+
+            $table->foreign('all_member_id')->on('all_members')->references('id')->onDelete('cascade');
         });
     }
 

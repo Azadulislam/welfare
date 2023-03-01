@@ -333,6 +333,7 @@ div.dataTables_wrapper div.dataTables_length label {
 div.dataTables_wrapper div.dataTables_length select {
   width: 60px;
   display: inline-block;
+    -webkit-appearance: none !important;
 }
 div.dataTables_wrapper div.dataTables_filter {
   text-align: right;

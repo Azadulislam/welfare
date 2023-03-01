@@ -53,7 +53,7 @@
                             <div class="row">
                                 @foreach(array(
                                         array('label'=>'Date', 'name'=>'date', 'type' => 'date', 'required' => true),
-                                        array('label'=>'Help Category', 'name'=>'help_cat_id', 'type' => 'select', 'required'=> true, 'values' => $help_cats, 'default' => 'Select Country'),
+                                        array('label'=>'Help Category', 'name'=>'help_cat_id', 'type' => 'select', 'required'=> true, 'values' => $help_cats, 'default' => 'Select Category'),
                                         array('label'=>'Total RM', 'name'=>'service_cost', 'type' => 'text', 'required' => true),
                                         array('label'=>'Type Of Help', 'name'=>'help_type_id', 'type' => 'select', 'required' => false, 'default' => 'Select Type', 'values' => $helpProvided->types)
                                         ) as $data)

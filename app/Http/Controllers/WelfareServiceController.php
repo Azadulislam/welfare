@@ -219,7 +219,7 @@ class WelfareServiceController extends Controller
         $details = 'Welfare service Updated';
         addActivity($welfare->id, $details);
 
-        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help registered successfully');
+        return redirect()->route('welfare.index')->with('alert-success', 'Welfare help updated successfully');
     }
 
     /**

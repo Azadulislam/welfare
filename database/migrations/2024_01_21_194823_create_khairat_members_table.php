@@ -22,6 +22,8 @@ return new class extends Migration
             $table->date('approval_date');
             $table->text('remarks')->nullable();
             $table->timestamps();
+
+            $table->foreign('member_id')->on('all_members')->references('id')->onDelete('cascade');
         });
     }
 

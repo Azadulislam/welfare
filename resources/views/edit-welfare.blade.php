@@ -110,8 +110,8 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Profession</label>
+                            <div class="form-group required">
+                                <label><span>Profession</span></label>
                                 <div class="row">
                                     @foreach(array('Job', 'Un Employed') as $job)
                                         <div class="col-lg-2 col-md-3 col-6">
@@ -170,8 +170,8 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label>Status of Current Place Of Stay</label>
+                            <div class="form-group required">
+                                <label><span>Status of Current Place Of Stay</span></label>
                                 <div class="row">
                                     @foreach($home_types as $place)
                                         <div class="col-lg-2 col-md-3 col-6">
@@ -223,11 +223,11 @@
 
                             <div class="row">
                                 @foreach(array(
-                                        array('label'=>'Name Of Complaint', 'name'=>'informer_name', 'type' => 'text', 'value' => $welfare->informer_name),
-                                        array('label'=>'Date', 'name'=>'date_apply', 'type' => 'date', 'value' => formatDate($welfare->date_apply))) as $info)
+                                        array('label'=>'Name Of Complaint', 'name'=>'informer_name', 'type' => 'text', 'required'=> false, 'value' => $welfare->informer_name),
+                                        array('label'=>'Date', 'name'=>'date_apply', 'type' => 'date', 'required'=> true, 'value' => formatDate($welfare->date_apply))) as $info)
                                     <div class="col-md-6 col-12">
-                                        <div class="form-group row align-items-center">
-                                            <label class="col-sm-3 col-form-label">{{ $info['label'] }}</label>
+                                        <div class="form-group row align-items-center @if($info['required']) required @endif">
+                                            <label class="col-sm-3 col-form-label"><span>{{ $info['label'] }}</span></label>
                                             <div class="col-sm-9">
                                                 <input type="{{ $info['type'] }}" placeholder="{{ $info['label'] }}"
                                                        name="{{$info['name']}}"
