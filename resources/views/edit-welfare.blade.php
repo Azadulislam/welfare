@@ -50,8 +50,8 @@
                             </div>
                             <input type="hidden" name="member_id" value="{{ old('member_id', $welfare->member_id) }}">
                             <div class="row">
-                                    <label class="col-lg-2 col-md-3 col-8 col-form-label" for=""><span>Select Member</span></label>
-                                <div class="form-group col-lg-10 col-md-9 col-8">
+                                    <label class="col-12 col-form-label" for=""><span>Select Member</span></label>
+                                <div class="form-group col-12">
                                     <input type="text" class="form-control" value="{{ $member->name }}" readonly/>
                                 </div>
                             </div>
@@ -134,8 +134,8 @@
                                 @enderror
                             </div>
                             <div class="form-group row align-items-center unemployed collapsed">
-                                <label class="">Un Employed Reason</label>
-                                <div class="col-sm-9">
+                                <label class="col-12">Un Employed Reason</label>
+                                <div class="col-12">
                                     <input type="text" name="unemployed_reason"
                                            value="{{ old('unemployed_reason', $member->unemployed_reason) }}"
                                            class="form-control"/>

@@ -85,8 +85,8 @@
                                 @endforeach
                             </div>
                             <div class="form-group row">
-                                <label class="col-sm-3 col-md-2 col-form-label" for="exampleTextarea1">Summary</label>
-                                <div class="col-sm-9 col-md-10">
+                                <label class="col-12" for="exampleTextarea1">Summary</label>
+                                <div class="col-12">
                                     <textarea class="form-control" name="summary" id="exampleTextarea1"
                                               rows="4">{{ old('summary') }}</textarea>
                                 </div>
