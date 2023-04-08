@@ -67,3 +67,10 @@ Route::post('/password/{user:id}', [HomeController::class, 'changePassword'])->n
 Route::post('/data-list', [HomeController::class, 'dataList']);
 
 Route::get('lang/change',[Langcontroller::class,'langChange'])->name('lang.langChange');
+//ajax
+Route::post('/data-list', [HomeController::class, 'dataList']);
+Route::post('/welfare-list/{category:id?}', [HomeController::class, 'welfareList']);
+Route::post('/khairat-list', [HomeController::class, 'khairatList']);
+Route::post('/death-list', [HomeController::class, 'deathList']);
+Route::post('/burial-payment-list', [HomeController::class, 'burialPaymentList']);
+Route::get('/backup', [HomeController::class, 'backup']);
