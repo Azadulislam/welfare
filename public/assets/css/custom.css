@@ -1,0 +1,35 @@
+.auth .form-group {
+    overflow: hidden;
+}
+
+.auth .form-control {
+    background-color: transparent;
+    background-position: center bottom, center calc(100% - 1px);
+    background-repeat: no-repeat;
+    background-size: 0 2px, 100% 1px;
+    padding: .5rem 0rem;
+    width: 100%;
+    -webkit-transition: background 0s ease-out 0s;
+    -o-transition: background 0s ease-out 0s;
+    transition: background 0s ease-out 0s;
+}
+
+.auth .form-control, .auth .form-control.focus, .auth .form-control:focus {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(var(--primaryColor)), to(var(--primaryColor))), -webkit-gradient(linear, left top, left bottom, from(#d9d9d9), to(#d9d9d9));
+    background-image: -webkit-linear-gradient(var(--primaryColor), var(--primaryColor)), -webkit-linear-gradient(#d9d9d9, #d9d9d9);
+    background-image: -o-linear-gradient(var(--primaryColor), var(--primaryColor)), -o-linear-gradient(#d9d9d9, #d9d9d9);
+    background-image: linear-gradient(var(--primaryColor), var(--primaryColor)), linear-gradient(#d9d9d9, #d9d9d9);
+    border: 0 none;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    float: none;
+}
+
+.auth .form-control.focus, .auth .form-control:focus {
+    background-size: 100% 2px, 100% 1px;
+    outline: 0 none;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
